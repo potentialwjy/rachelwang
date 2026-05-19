@@ -76,11 +76,16 @@
   }
   .hero-video-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--cyan); }
   .hero-video-thumb {
-    display: block; width: 100%; height: auto;
-    border-radius: 14px;
+    display: block; width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 14px; overflow: hidden;
     border: 1px solid rgba(0,180,216,0.28);
     box-shadow: 0 16px 56px rgba(0,0,0,0.55);
     background: var(--navy);
+    position: relative;
+  }
+  .hero-video-thumb iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: none;
   }
   .hero-video-caption {
     margin-top: 10px; font-size: 11px; color: rgba(248,250,255,0.38);
@@ -380,13 +385,14 @@
 
   <div class="hero-video">
     <div class="hero-video-label">2026 San Diego Cup Highlights</div>
-    <video
-      class="hero-video-thumb"
-      poster="highlights of 2026 San Diego Cup.jpg"
-      controls
-      preload="metadata">
-      <source src="highlights of 2026 San Diego Cup.MOV" type="video/mp4">
-    </video>
+    <div class="hero-video-thumb">
+      <iframe
+        src="https://drive.google.com/file/d/1Oldp09PJj_pmd7rQzG1m4941mF0JQcmq/preview"
+        title="Rachel Wang 2026 San Diego Cup Highlights"
+        allow="autoplay"
+        allowfullscreen>
+      </iframe>
+    </div>
   </div>
 </section>
 
