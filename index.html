@@ -405,7 +405,7 @@
   <div class="hero-video">
     <div class="hero-video-label">2026 San Diego Cup Highlights</div>
     <div class="hero-video-thumb" id="video-container">
-      <iframe id="video-iframe" src="" data-src="https://drive.google.com/file/d/1Oldp09PJj_pmd7rQzG1m4941mF0JQcmq/preview" title="Rachel Wang 2026 San Diego Cup Highlights" allow="autoplay" allowfullscreen></iframe>
+      <iframe id="video-iframe" src="" data-src="https://drive.google.com/file/d/1Oldp09PJj_pmd7rQzG1m4941mF0JQcmq/preview?autoplay=1" title="Rachel Wang 2026 San Diego Cup Highlights" allow="autoplay" allowfullscreen></iframe>
       <div class="video-preview" id="video-preview" onclick="startVideo()">
         <img src="videopreview.png" alt="2026 San Diego Cup Highlights">
         <button class="video-play-btn">
@@ -710,6 +710,9 @@
     el.style.transition = 'opacity 0.5s ease,transform 0.5s ease';
     observer.observe(el);
   });
+  let videoTimer = null;
+  const VIDEO_DURATION_MS = 154 * 1000;
+
   function startVideo() {
     const iframe = document.getElementById('video-iframe');
     const preview = document.getElementById('video-preview');
@@ -718,8 +721,11 @@
     preview.style.display = 'none';
     iframe.style.display = 'block';
     closeBtn.style.display = 'flex';
+    clearTimeout(videoTimer);
+    videoTimer = setTimeout(closeVideo, VIDEO_DURATION_MS);
   }
   function closeVideo() {
+    clearTimeout(videoTimer);
     const iframe = document.getElementById('video-iframe');
     const preview = document.getElementById('video-preview');
     const closeBtn = document.getElementById('video-close');
