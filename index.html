@@ -129,6 +129,7 @@
     font-size: 12px; color: var(--aqua); white-space: nowrap;
   }
   .cred-pill.gold { background: rgba(244,197,66,0.1); border-color: rgba(244,197,66,0.35); color: var(--gold); }
+  .cred-pill.odp { background: rgba(198,40,40,0.1); border-color: rgba(198,40,40,0.45); color: #ef5350; }
   .hero-stats { display: flex; gap: 40px; margin-top: 32px; animation: fadeUp 0.8s 0.3s ease both; }
   .stat-item .num { font-family: 'Bebas Neue', sans-serif; font-size: 38px; color: var(--gold); line-height: 1; }
   .stat-item .lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(248,250,255,0.4); margin-top: 2px; }
@@ -356,18 +357,15 @@
         <span class="ig-pill-sub">Follow on Instagram ↗</span>
       </div>
     </a>
-    <p class="hero-subtitle">Competitive water polo player, Olympic Development athlete, and passionate coach dedicated to bringing swimming and water polo to the next generation of girls.</p>
+    <p class="hero-subtitle">Competitive water polo player, passionate coach dedicated to bringing swimming and water polo to the next generation of girls.</p>
     <div class="hero-credentials">
       <span class="cred-pill">🏊 Stanford Water Polo Club</span>
       <span class="cred-pill">⭐ PAC Zone ODP Roster</span>
       <span class="cred-pill gold">Harker Upper School</span>
       <span class="cred-pill gold">Archbishop Mitty High</span>
+      <span class="cred-pill odp">🛡️ Olympic Dev Program</span>
     </div>
     <div class="hero-stats">
-      <div class="stat-item">
-        <div class="num">ODP</div>
-        <div class="lbl">Olympic Dev Program</div>
-      </div>
       <div class="stat-item">
         <div class="num">6–15</div>
         <div class="lbl">Ages Welcome</div>
@@ -400,7 +398,10 @@
   <div class="about-grid">
     <div class="about-text">
       <div class="section-label">About Me</div>
-      <h2 class="section-title">Rachel Wang</h2>
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+        <h2 class="section-title" style="margin-bottom:0;">Rachel Wang</h2>
+        <img src="odp-logo.png" alt="Olympic Development Program" style="width:130px; height:130px; object-fit:contain; flex-shrink:0;">
+      </div>
       <div class="section-divider"></div>
       <p>Hi! I'm Rachel Wang — a competitive water polo player who has been in the water as long as I can remember. I play for the Stanford Water Polo Club and am on the PAC Zone roster for the Olympic Development Program.</p>
       <p>This summer, I want to give back by coaching girls ages 6–15 in swimming fundamentals and water polo — completely free of charge. Whether you've never been in a pool or you're already swimming, there's a place for you.</p>
@@ -546,8 +547,8 @@
 
 <footer>
   <div class="f-logo">Rachel Wang</div>
-  <p>🤽 Water Polo &amp; Swimming · Summer 2025 · South Bay, CA</p>
-  <p>© 2025 Rachel Wang · Stanford Water Polo Club · PAC Zone ODP</p>
+  <p>🤽 Water Polo &amp; Swimming · Summer 2026 · South Bay, CA</p>
+  <p>© 2026 Rachel Wang · Stanford Water Polo Club · PAC Zone ODP</p>
 </footer>
 
 <script>
