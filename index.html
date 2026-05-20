@@ -100,14 +100,14 @@
   }
   .video-play-btn:hover { transform: scale(1.12); background: #ff0000; }
   .video-close-btn {
-    position: absolute; top: 12px; right: 12px; z-index: 10;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.2);
-    color: white; font-size: 15px; cursor: pointer; display: none;
+    position: absolute; bottom: 12px; right: 12px; z-index: 10;
+    padding: 6px 14px; border-radius: 20px;
+    background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.75); font-size: 12px; cursor: pointer; display: none;
     align-items: center; justify-content: center;
     transition: background 0.2s;
   }
-  .video-close-btn:hover { background: rgba(0,0,0,0.85); }
+  .video-close-btn:hover { background: rgba(0,0,0,0.9); color: white; }
   .hero-video-caption {
     margin-top: 10px; font-size: 11px; color: rgba(248,250,255,0.38);
     text-align: center; letter-spacing: 0.3px; flex-shrink: 0;
@@ -405,14 +405,14 @@
   <div class="hero-video">
     <div class="hero-video-label">2026 San Diego Cup Highlights</div>
     <div class="hero-video-thumb" id="video-container">
-      <iframe id="video-iframe" src="" data-src="https://drive.google.com/file/d/1Oldp09PJj_pmd7rQzG1m4941mF0JQcmq/preview?autoplay=1" title="Rachel Wang 2026 San Diego Cup Highlights" allow="autoplay" allowfullscreen></iframe>
+      <iframe id="video-iframe" src="" data-src="https://drive.google.com/file/d/1Oldp09PJj_pmd7rQzG1m4941mF0JQcmq/preview" title="Rachel Wang 2026 San Diego Cup Highlights" allow="autoplay" allowfullscreen></iframe>
       <div class="video-preview" id="video-preview" onclick="startVideo()">
         <img src="videopreview.png" alt="2026 San Diego Cup Highlights">
         <button class="video-play-btn">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
         </button>
       </div>
-      <button class="video-close-btn" id="video-close" onclick="closeVideo()">✕</button>
+      <button class="video-close-btn" id="video-close" onclick="closeVideo()">↩ 重新观看</button>
     </div>
   </div>
 </section>
@@ -720,9 +720,8 @@
     iframe.src = iframe.dataset.src;
     preview.style.display = 'none';
     iframe.style.display = 'block';
-    closeBtn.style.display = 'flex';
     clearTimeout(videoTimer);
-    videoTimer = setTimeout(closeVideo, VIDEO_DURATION_MS);
+    videoTimer = setTimeout(() => { closeBtn.style.display = 'flex'; }, VIDEO_DURATION_MS);
   }
   function closeVideo() {
     clearTimeout(videoTimer);
