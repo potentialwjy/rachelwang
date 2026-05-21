@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participation Waiver — Rachel Wang Water Polo Program</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root {
+    --navy: #0a1628; --deep: #0d1f3c; --blue: #0f4c8a;
+    --cyan: #00b4d8; --aqua: #48cae4; --white: #f8faff; --gold: #f4c542;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 18px 48px; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,22,40,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,180,216,0.15);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; color: var(--cyan); text-decoration: none; }
+  .nav-back { color: rgba(248,250,255,0.55); text-decoration: none; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: var(--cyan); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 110px 24px 80px; }
+
+  .page-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,6vw,56px); letter-spacing: 1px; line-height: 1; margin-bottom: 8px; }
+  .page-sub { font-size: 14px; color: rgba(248,250,255,0.5); margin-bottom: 40px; }
+
+  /* Waiver Text */
+  .waiver-box {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(0,180,216,0.15);
+    border-radius: 12px; padding: 32px 36px; margin-bottom: 36px;
+    font-size: 13.5px; line-height: 1.85; color: rgba(248,250,255,0.72);
+  }
+  .waiver-box h3 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 1.5px;
+    color: var(--cyan); margin: 24px 0 8px;
+  }
+  .waiver-box h3:first-child { margin-top: 0; }
+  .waiver-box ul { padding-left: 20px; margin: 8px 0; }
+  .waiver-box li { margin-bottom: 6px; }
+  .waiver-box strong { color: var(--white); font-weight: 500; }
+
+  /* Form */
+  .form-section-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 1px;
+    color: var(--white); margin: 36px 0 20px;
+    padding-bottom: 10px; border-bottom: 1px solid rgba(0,180,216,0.18);
+  }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
+  .form-group label { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(248,250,255,0.45); }
+  .form-group input, .form-group select, .form-group textarea {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; padding: 11px 14px; color: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(248,250,255,0.2); }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: rgba(0,180,216,0.6); }
+  .form-group select option { background: var(--deep); }
+  .form-group textarea { min-height: 80px; resize: vertical; }
+
+  /* Checkboxes */
+  .check-group { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+  .check-label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; font-size: 14px; color: rgba(248,250,255,0.72); line-height: 1.6; }
+  .check-label input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; accent-color: var(--cyan); width: 16px; height: 16px; cursor: pointer; }
+
+  /* Signature */
+  .sig-wrap { margin: 28px 0; }
+  .sig-label { font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(248,250,255,0.45); margin-bottom: 10px; display: block; }
+  .sig-canvas-wrap {
+    border: 1px solid rgba(0,180,216,0.35); border-radius: 8px; overflow: hidden;
+    background: rgba(255,255,255,0.04); position: relative;
+  }
+  #sig-canvas { display: block; width: 100%; height: 160px; cursor: crosshair; touch-action: none; }
+  .sig-hint { font-size: 11px; color: rgba(248,250,255,0.25); margin-top: 6px; }
+  .sig-clear {
+    position: absolute; top: 8px; right: 10px;
+    background: none; border: 1px solid rgba(255,255,255,0.15); border-radius: 4px;
+    color: rgba(248,250,255,0.4); font-size: 11px; letter-spacing: 1px; padding: 4px 10px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .sig-clear:hover { border-color: rgba(255,255,255,0.4); color: var(--white); }
+
+  /* Submit */
+  .submit-btn {
+    width: 100%; padding: 16px; background: var(--cyan); color: var(--navy);
+    border: none; border-radius: 6px; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; margin-top: 28px;
+  }
+  .submit-btn:hover { background: var(--aqua); transform: translateY(-2px); }
+  .submit-btn:disabled { background: rgba(0,180,216,0.35); cursor: not-allowed; transform: none; }
+
+  .status-msg { margin-top: 16px; text-align: center; font-size: 14px; min-height: 20px; }
+  .status-msg.success { color: #4ade80; }
+  .status-msg.error { color: #f87171; }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .waiver-box { padding: 24px 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-grid .full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Rachel Wang</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<div class="wrap">
+  <div class="page-label">Summer 2026 Program</div>
+  <h1 class="page-title">Participation Waiver</h1>
+  <p class="page-sub">Please read carefully and complete all fields. A copy will be sent to your email upon submission.</p>
+
+  <!-- Waiver Text -->
+  <div class="waiver-box">
+    <h3>Program Description</h3>
+    <p>This waiver applies to all water polo and swimming instruction sessions (the "Program") led by Rachel Wang in South Bay, CA during Summer 2026. Sessions are held at pool locations provided by participants.</p>
+
+    <h3>Acknowledgment of Inherent Risks</h3>
+    <p>I understand that swimming and water polo activities involve inherent risks, including but not limited to: drowning or near-drowning, physical injury from contact with pool walls, equipment, or other participants, falls on wet surfaces, muscle strains, and other unforeseen accidents. I voluntarily accept these risks on behalf of my child.</p>
+
+    <h3>Mandatory Parental Supervision</h3>
+    <p>I understand and agree that:</p>
+    <ul>
+      <li>A <strong>parent or legal guardian must be physically present</strong> at the pool and actively supervising the participant for the entire duration of every session.</li>
+      <li>The coach does <strong>not</strong> provide lifeguard services.</li>
+      <li>The parent/guardian is solely responsible for monitoring the child's safety and responding to any emergencies at all times.</li>
+      <li>If no parent or guardian is present at the start of a session, the session will not proceed.</li>
+    </ul>
+
+    <h3>Release of Liability</h3>
+    <p>In consideration of my child's participation in the Program, I, on behalf of myself, my child, and our heirs and assigns, hereby <strong>release, waive, and discharge Rachel Wang, her parents, and her guardians</strong> from any and all claims, liabilities, losses, or damages arising out of or in connection with participation in this Program, whether caused by negligence or otherwise, to the fullest extent permitted by applicable law.</p>
+
+    <h3>Medical Authorization</h3>
+    <p>I confirm that my child is in good health and physically capable of participating in swimming and water polo activities. In the event of an emergency where I cannot be reached, I authorize the coach to seek emergency medical assistance for my child. I agree to be responsible for any medical expenses incurred.</p>
+
+    <h3>Agreement</h3>
+    <p>By signing below, I confirm that: (1) I am the legal parent or guardian of the participant named below; (2) I have read and fully understand this Waiver; and (3) I agree to all terms voluntarily and without duress.</p>
+  </div>
+
+  <!-- Form -->
+  <form id="waiver-form" novalidate>
+
+    <div class="form-section-title">Participant Information</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Child's Full Name *</label>
+        <input type="text" id="child-name" placeholder="First and last name" required>
+      </div>
+      <div class="form-group">
+        <label>Child's Date of Birth *</label>
+        <input type="date" id="child-dob" required>
+      </div>
+      <div class="form-group full">
+        <label>Medical Conditions / Allergies</label>
+        <textarea id="medical" placeholder="List any conditions or allergies we should be aware of, or write 'None'"></textarea>
+      </div>
+    </div>
+
+    <div class="form-section-title">Parent / Guardian Information</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Parent / Guardian Full Name *</label>
+        <input type="text" id="parent-name" placeholder="First and last name" required>
+      </div>
+      <div class="form-group">
+        <label>Relationship to Child *</label>
+        <select id="relationship" required>
+          <option value="">Select…</option>
+          <option>Mother</option>
+          <option>Father</option>
+          <option>Legal Guardian</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="phone" placeholder="(555) 000-0000" required>
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="email" placeholder="your@email.com" required>
+      </div>
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="form-section-title">Consent</div>
+    <div class="check-group">
+      <label class="check-label">
+        <input type="checkbox" id="photo-consent">
+        I consent to photos and videos of my child being used for program promotion on Rachel Wang's website and social media.
+      </label>
+      <label class="check-label">
+        <input type="checkbox" id="agree" required>
+        <span>I have read, understood, and agree to all terms of this Waiver and Release of Liability. <strong>*</strong></span>
+      </label>
+    </div>
+
+    <!-- Signature -->
+    <div class="sig-wrap">
+      <span class="sig-label">Parent / Guardian Signature *</span>
+      <div class="sig-canvas-wrap">
+        <canvas id="sig-canvas"></canvas>
+        <button type="button" class="sig-clear" onclick="clearSig()">Clear</button>
+      </div>
+      <p class="sig-hint">Draw your signature using your mouse or finger.</p>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submit-btn">Sign &amp; Submit Waiver</button>
+    <p class="status-msg" id="status-msg"></p>
+  </form>
+</div>
+
+<script>
+  // ── EmailJS ──────────────────────────────────────────────
+  // TODO: Replace with your EmailJS credentials
+  const EMAILJS_PUBLIC_KEY  = 'OXCuaox8AUrtPTHg3';
+  const EMAILJS_SERVICE_ID  = 'service_qymnwxf';
+  const EMAILJS_TEMPLATE_ID = 'template_w2gj5ds';
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  // ── Signature Pad ────────────────────────────────────────
+  const canvas = document.getElementById('sig-canvas');
+  const ctx = canvas.getContext('2d');
+  let drawing = false;
+
+  function resizeCanvas() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = 160;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const src = e.touches ? e.touches[0] : e;
+    return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+  }
+
+  canvas.addEventListener('mousedown',  e => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove',  e => { if (!drawing) return; const p = getPos(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.strokeStyle = '#f8faff'; ctx.lineTo(p.x, p.y); ctx.stroke(); });
+  canvas.addEventListener('mouseup',    () => drawing = false);
+  canvas.addEventListener('mouseleave', () => drawing = false);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, { passive: false });
+  canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.strokeStyle = '#f8faff'; ctx.lineTo(p.x, p.y); ctx.stroke(); }, { passive: false });
+  canvas.addEventListener('touchend',   () => drawing = false);
+
+  function clearSig() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+  function isSigEmpty() {
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    return !data.some(v => v !== 0);
+  }
+
+  // ── Generate PDF ─────────────────────────────────────────
+  function generatePDF(fields) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+    const W = 216, margin = 20, lineH = 7;
+    let y = 20;
+
+    const addText = (text, size, bold, color) => {
+      doc.setFontSize(size);
+      doc.setFont('helvetica', bold ? 'bold' : 'normal');
+      doc.setTextColor(...(color || [220, 240, 255]));
+      const lines = doc.splitTextToSize(text, W - margin * 2);
+      lines.forEach(line => { doc.text(line, margin, y); y += size * 0.45; });
+      y += 2;
+    };
+
+    // Header
+    doc.setFillColor(10, 22, 40);
+    doc.rect(0, 0, W, 297, 'F');
+    doc.setFillColor(0, 180, 216);
+    doc.rect(0, 0, W, 2, 'F');
+
+    addText('ACTIVITY PARTICIPATION WAIVER & RELEASE OF LIABILITY', 16, true, [248, 250, 255]);
+    addText('Rachel Wang Water Polo & Swimming Program — Summer 2026', 11, false, [0, 180, 216]);
+    y += 4;
+
+    // Waiver sections
+    const sections = [
+      ['PROGRAM DESCRIPTION', 'This waiver covers participation in water polo and swimming instruction sessions led by Rachel Wang in South Bay, CA during Summer 2026.'],
+      ['ACKNOWLEDGMENT OF INHERENT RISKS', 'I understand that swimming and water polo activities involve inherent risks including drowning, physical injury from contact with pool walls, equipment or other participants, falls on wet surfaces, and other unforeseen accidents. I voluntarily accept these risks.'],
+      ['MANDATORY PARENTAL SUPERVISION', 'A parent or legal guardian must be physically present and actively supervising the participant for the entire duration of every session. The coach does not provide lifeguard services. The parent/guardian is solely responsible for the child\'s safety at all times.'],
+      ['RELEASE OF LIABILITY', 'I hereby release, waive, and discharge Rachel Wang, her parents, and her guardians from any and all claims, liabilities, or damages arising from participation in this Program, to the fullest extent permitted by law.'],
+      ['MEDICAL AUTHORIZATION', 'I confirm my child is in good health and physically capable of participation. I authorize emergency medical assistance if I cannot be reached, and agree to be responsible for any medical expenses incurred.'],
+    ];
+
+    sections.forEach(([title, body]) => {
+      addText(title, 10, true, [0, 180, 216]);
+      addText(body, 10, false, [200, 220, 240]);
+      y += 2;
+    });
+
+    // Participant info
+    y += 4;
+    addText('PARTICIPANT INFORMATION', 10, true, [0, 180, 216]);
+    [
+      ['Child\'s Full Name', fields.childName],
+      ['Date of Birth', fields.childDob],
+      ['Medical Notes', fields.medical || 'None'],
+      ['Parent / Guardian', fields.parentName],
+      ['Relationship', fields.relationship],
+      ['Phone', fields.phone],
+      ['Email', fields.email],
+      ['Photo Consent', fields.photoConsent ? 'Yes' : 'No'],
+      ['Submission Date', fields.date],
+    ].forEach(([label, val]) => {
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold'); doc.setTextColor(160, 200, 220);
+      doc.text(label + ':', margin, y);
+      doc.setFont('helvetica', 'normal'); doc.setTextColor(220, 240, 255);
+      doc.text(String(val), margin + 50, y);
+      y += lineH;
+    });
+
+    // Signature
+    y += 6;
+    addText('SIGNATURE', 10, true, [0, 180, 216]);
+    const sigData = canvas.toDataURL('image/png');
+    doc.addImage(sigData, 'PNG', margin, y, 80, 28);
+    y += 32;
+    doc.setFontSize(9); doc.setTextColor(120, 160, 180);
+    doc.text(`Signed by: ${fields.parentName}   Date: ${fields.date}`, margin, y);
+
+    return doc;
+  }
+
+  // ── Submit ───────────────────────────────────────────────
+  document.getElementById('waiver-form').addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const btn = document.getElementById('submit-btn');
+    const statusEl = document.getElementById('status-msg');
+    statusEl.className = 'status-msg';
+    statusEl.textContent = '';
+
+    // Validate
+    const childName  = document.getElementById('child-name').value.trim();
+    const childDob   = document.getElementById('child-dob').value;
+    const parentName = document.getElementById('parent-name').value.trim();
+    const relationship = document.getElementById('relationship').value;
+    const phone      = document.getElementById('phone').value.trim();
+    const email      = document.getElementById('email').value.trim();
+    const medical    = document.getElementById('medical').value.trim();
+    const photoConsent = document.getElementById('photo-consent').checked;
+    const agreed     = document.getElementById('agree').checked;
+
+    if (!childName || !childDob || !parentName || !relationship || !phone || !email) {
+      statusEl.textContent = 'Please fill in all required fields.';
+      statusEl.className = 'status-msg error';
+      return;
+    }
+    if (!agreed) {
+      statusEl.textContent = 'Please check the agreement box to continue.';
+      statusEl.className = 'status-msg error';
+      return;
+    }
+    if (isSigEmpty()) {
+      statusEl.textContent = 'Please provide your signature.';
+      statusEl.className = 'status-msg error';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Submitting…';
+
+    const fields = {
+      childName, childDob, parentName, relationship,
+      phone, email, medical, photoConsent,
+      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    };
+
+    try {
+      // Generate PDF and trigger download
+      const doc = generatePDF(fields);
+      doc.save(`Waiver_${childName.replace(/\s+/g, '_')}.pdf`);
+
+      // Send email via EmailJS
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        child_name:    childName,
+        child_dob:     childDob,
+        parent_name:   parentName,
+        relationship:  relationship,
+        phone:         phone,
+        parent_email:  email,
+        medical:       medical || 'None',
+        photo_consent: photoConsent ? 'Yes' : 'No',
+        sign_date:     fields.date,
+        signature_img: canvas.toDataURL('image/png'),
+      });
+
+      statusEl.textContent = '✓ Waiver submitted! A PDF has been downloaded to your device.';
+      statusEl.className = 'status-msg success';
+      btn.textContent = 'Submitted ✓';
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = 'Submission failed. Please try again or contact us directly.';
+      statusEl.className = 'status-msg error';
+      btn.disabled = false;
+      btn.textContent = 'Sign & Submit Waiver';
+    }
+  });
+</script>
+</body>
+</html>
