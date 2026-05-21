@@ -239,8 +239,10 @@
 
   function resizeCanvas() {
     const rect = canvas.parentElement.getBoundingClientRect();
+    const saved = ctx.getImageData(0, 0, canvas.width, canvas.height);
     canvas.width = rect.width;
     canvas.height = 160;
+    ctx.putImageData(saved, 0, 0);
   }
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
@@ -408,6 +410,15 @@
       statusEl.textContent = '✓ Waiver submitted! A PDF has been downloaded to your device.';
       statusEl.className = 'status-msg success';
       btn.textContent = 'Submitted ✓';
+      // Reset form after 4 seconds so another family can sign
+      setTimeout(() => {
+        document.getElementById('waiver-form').reset();
+        clearSig();
+        btn.disabled = false;
+        btn.textContent = 'Sign & Submit Waiver';
+        statusEl.textContent = '';
+        statusEl.className = 'status-msg';
+      }, 4000);
     } catch (err) {
       console.error(err);
       statusEl.textContent = 'Submission failed. Please try again or contact us directly.';
