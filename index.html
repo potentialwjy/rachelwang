@@ -65,8 +65,9 @@
   }
   .hero-video {
     position: relative; z-index: 2;
-    width: min(48vw, 560px); flex-shrink: 0; margin-left: auto;
+    width: 100%; max-width: 560px;
     display: flex; flex-direction: column;
+    margin-top: 32px;
     animation: fadeUp 0.8s 0.5s ease both;
   }
   .hero-video-label {
@@ -376,14 +377,14 @@
       <a href="#signup" class="btn-primary">Sign Up Free</a>
       <a href="#about" class="btn-outline">Learn More</a>
     </div>
+    <div class="hero-video">
+      <div class="hero-video-label">2026 San Diego Cup Highlights</div>
+      <video class="hero-video-thumb" poster="videopreview.png" controls preload="none">
+        <source src="highlights_compressed.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 
-  <div class="hero-video">
-    <div class="hero-video-label">2026 San Diego Cup Highlights</div>
-    <video class="hero-video-thumb" poster="videopreview.png" controls preload="none">
-      <source src="highlights_compressed.mp4" type="video/mp4">
-    </video>
-  </div>
 </section>
 
 <section id="about">
