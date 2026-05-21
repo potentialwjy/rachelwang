@@ -43,6 +43,7 @@
 
   .hero {
     min-height: 100vh; position: relative; display: flex; align-items: flex-start;
+    justify-content: center;
     overflow: hidden; padding: 80px 8vw 80px;
     gap: 56px;
   }
@@ -61,7 +62,8 @@
 
   .hero-content {
     position: relative; z-index: 2; max-width: 600px; width: 100%; flex-shrink: 0;
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
   }
   .hero-video {
     position: relative; z-index: 2;
@@ -72,7 +74,7 @@
   }
   .hero-video-label {
     font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
-    color: var(--cyan); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+    color: var(--cyan); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;
     flex-shrink: 0;
   }
   .hero-video-label::before { content: ''; display: block; width: 24px; height: 1px; background: var(--cyan); }
@@ -113,11 +115,12 @@
   .hero-name span { color: var(--cyan); }
   .hero-subtitle {
     margin-top: 24px; font-size: 16px; line-height: 1.75;
-    color: rgba(248,250,255,0.58); max-width: 480px;
+    color: rgba(248,250,255,0.58);
     animation: fadeUp 0.8s 0.2s ease both;
   }
   .hero-credentials {
     display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px;
+    justify-content: center;
     animation: fadeUp 0.8s 0.25s ease both;
   }
   .cred-pill {
@@ -127,10 +130,10 @@
   }
   .cred-pill.gold { background: rgba(244,197,66,0.1); border-color: rgba(244,197,66,0.35); color: var(--gold); }
   .cred-pill.odp { background: rgba(198,40,40,0.1); border-color: rgba(198,40,40,0.45); color: #ef5350; }
-  .hero-stats { display: flex; gap: 40px; margin-top: 32px; animation: fadeUp 0.8s 0.3s ease both; }
+  .hero-stats { display: flex; gap: 40px; margin-top: 32px; justify-content: center; animation: fadeUp 0.8s 0.3s ease both; }
   .stat-item .num { font-family: 'Bebas Neue', sans-serif; font-size: 38px; color: var(--gold); line-height: 1; }
   .stat-item .lbl { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(248,250,255,0.4); margin-top: 2px; }
-  .hero-cta { display: flex; gap: 16px; margin-top: 32px; animation: fadeUp 0.8s 0.4s ease both; }
+  .hero-cta { display: flex; gap: 16px; margin-top: 32px; justify-content: center; animation: fadeUp 0.8s 0.4s ease both; }
 
   .btn-primary {
     padding: 14px 32px; background: var(--cyan); color: var(--navy);
