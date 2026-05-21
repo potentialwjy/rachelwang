@@ -127,7 +127,7 @@
   <!-- Waiver Text -->
   <div class="waiver-box">
     <h3>Program Description</h3>
-    <p>This waiver applies to all water polo and swimming instruction sessions (the "Program") led by Rachel Wang in South Bay, CA during Summer 2026. Sessions are held at pool locations provided by participants.</p>
+    <p>This waiver applies to all water polo and swimming instruction sessions (the "Program") led by Rachel Wang in Bay Area, CA during Summer 2026. Sessions are held at pool locations provided by participants.</p>
 
     <h3>Acknowledgment of Inherent Risks</h3>
     <p>I understand that swimming and water polo activities involve inherent risks, including but not limited to: drowning or near-drowning, physical injury from contact with pool walls, equipment, or other participants, falls on wet surfaces, muscle strains, and other unforeseen accidents. I voluntarily accept these risks on behalf of my child.</p>
@@ -200,7 +200,7 @@
     <div class="form-section-title">Consent</div>
     <div class="check-group">
       <label class="check-label">
-        <input type="checkbox" id="photo-consent">
+        <input type="checkbox" id="photo-consent" required>
         I consent to photos and videos of my child being used for program promotion on Rachel Wang's website and social media.
       </label>
       <label class="check-label">
@@ -299,7 +299,7 @@
 
     // Waiver sections
     const sections = [
-      ['PROGRAM DESCRIPTION', 'This waiver covers participation in water polo and swimming instruction sessions led by Rachel Wang in South Bay, CA during Summer 2026.'],
+      ['PROGRAM DESCRIPTION', 'This waiver covers participation in water polo and swimming instruction sessions led by Rachel Wang in Bay Area, CA during Summer 2026.'],
       ['ACKNOWLEDGMENT OF INHERENT RISKS', 'I understand that swimming and water polo activities involve inherent risks including drowning, physical injury from contact with pool walls, equipment or other participants, falls on wet surfaces, and other unforeseen accidents. I voluntarily accept these risks.'],
       ['MANDATORY PARENTAL SUPERVISION', 'A parent or legal guardian must be physically present and actively supervising the participant for the entire duration of every session. The coach does not provide lifeguard services. The parent/guardian is solely responsible for the child\'s safety at all times.'],
       ['RELEASE OF LIABILITY', 'I hereby release, waive, and discharge Rachel Wang, her parents, and her guardians from any and all claims, liabilities, or damages arising from participation in this Program, to the fullest extent permitted by law.'],
@@ -373,6 +373,11 @@
     }
     if (!agreed) {
       statusEl.textContent = 'Please check the agreement box to continue.';
+      statusEl.className = 'status-msg error';
+      return;
+    }
+    if (!photoConsent) {
+      statusEl.textContent = 'Please check the photo consent box to continue.';
       statusEl.className = 'status-msg error';
       return;
     }
