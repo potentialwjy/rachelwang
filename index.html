@@ -67,9 +67,8 @@
   }
   .hero-video {
     position: relative; z-index: 2;
-    width: 100%; max-width: 560px;
+    width: min(60vw, 700px); flex-shrink: 0; margin-left: auto; align-self: center;
     display: flex; flex-direction: column;
-    margin-top: 32px;
     animation: fadeUp 0.8s 0.5s ease both;
   }
   .hero-video-label {
@@ -241,7 +240,7 @@
   .curr-item span { font-size: 14px; color: rgba(248,250,255,0.72); }
 
   #signup { background: var(--deep); }
-  .signup-wrap { border: 1px solid rgba(0,180,216,0.18); border-radius: 12px; overflow: hidden; }
+  .signup-wrap { border: 1px solid rgba(0,180,216,0.18); border-radius: 12px; overflow: hidden; max-width: 760px; }
   .signup-header {
     padding: 26px 36px; background: rgba(0,180,216,0.07);
     border-bottom: 1px solid rgba(0,180,216,0.14);
@@ -316,6 +315,8 @@
     .hero-right { display: none; }
     .curriculum { grid-template-columns: 1fr; }
     .program-banner { flex-direction: column; align-items: flex-start; }
+    .hero { flex-direction: column; align-items: center; gap: 0; }
+    .hero-video { width: 100%; max-width: 560px; margin-left: 0; margin-top: 32px; }
   }
 </style>
 </head>
@@ -380,12 +381,13 @@
       <a href="#signup" class="btn-primary">Sign Up Free</a>
       <a href="#about" class="btn-outline">Learn More</a>
     </div>
-    <div class="hero-video">
-      <div class="hero-video-label">2026 San Diego Cup Highlights</div>
-      <video class="hero-video-thumb" poster="videopreview.png" controls preload="none">
-        <source src="highlights_compressed.mp4" type="video/mp4">
-      </video>
-    </div>
+  </div>
+
+  <div class="hero-video">
+    <div class="hero-video-label">2026 San Diego Cup Highlights</div>
+    <video class="hero-video-thumb" poster="videopreview.png" controls preload="none">
+      <source src="highlights_compressed.mp4" type="video/mp4">
+    </video>
   </div>
 
 </section>
@@ -481,8 +483,8 @@
   <div class="section-label">Sign Up</div>
   <h2 class="section-title">Reserve Your Spot</h2>
   <div class="section-divider"></div>
-  <p style="color:rgba(248,250,255,0.52);margin-bottom:24px;font-size:15px;max-width:540px;">Spots are limited — first come, first served! Fill out the form below to register. We'll follow up to confirm session details and your pool location.</p>
-  <div style="background:rgba(244,197,66,0.08);border:1px solid rgba(244,197,66,0.3);border-radius:10px;padding:16px 24px;margin-bottom:32px;max-width:540px;display:flex;align-items:center;gap:16px;">
+  <p style="color:rgba(248,250,255,0.52);margin-bottom:24px;font-size:15px;max-width:760px;">Spots are limited — first come, first served! Fill out the form below to register. We'll follow up to confirm session details and your pool location.</p>
+  <div style="background:rgba(244,197,66,0.08);border:1px solid rgba(244,197,66,0.3);border-radius:10px;padding:16px 24px;margin-bottom:32px;max-width:760px;display:flex;align-items:center;gap:16px;">
     <span style="font-size:22px;">📋</span>
     <div>
       <div style="font-size:13px;font-weight:500;color:var(--gold);margin-bottom:3px;">Parent / Guardian Waiver Required</div>
