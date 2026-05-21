@@ -398,25 +398,34 @@
       const safeName = childName.replace(/\s+/g, '_');
       const fileName = `waiver_${safeName}_${Date.now()}.pdf`;
 
-      // Upload PDF to Supabase Storage
-      btn.textContent = 'Uploading…';
-      const uploadRes = await fetch(
-        `${SUPABASE_URL}/storage/v1/object/waivers/${fileName}`,
-        {
-          method: 'POST',
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
-            'Content-Type': 'application/pdf',
-            'Cache-Control': '3600',
-          },
-          body: pdfArrayBuffer,
+      // Try to upload PDF to Supabase Storage (non-fatal if it fails)
+      let pdfUrl = null;
+      try {
+        btn.textContent = 'Uploading PDF…';
+        const uploadRes = await fetch(
+          `${SUPABASE_URL}/storage/v1/object/waivers/${fileName}`,
+          {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/pdf',
+              'Cache-Control': '3600',
+            },
+            body: pdfArrayBuffer,
+          }
+        );
+        if (uploadRes.ok) {
+          pdfUrl = `${SUPABASE_URL}/storage/v1/object/public/waivers/${fileName}`;
+        } else {
+          const errText = await uploadRes.text();
+          console.warn('PDF upload failed:', errText);
         }
-      );
-      if (!uploadRes.ok) throw new Error('PDF upload failed: ' + (await uploadRes.text()));
-      const pdfUrl = `${SUPABASE_URL}/storage/v1/object/public/waivers/${fileName}`;
+      } catch (uploadErr) {
+        console.warn('PDF upload error:', uploadErr);
+      }
 
-      // Send email via EmailJS (includes PDF link)
+      // Send email via EmailJS
       btn.textContent = 'Sending…';
       await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
         child_name:    childName,
@@ -428,13 +437,16 @@
         medical:       medical || 'None',
         photo_consent: photoConsent ? 'Yes' : 'No',
         sign_date:     fields.date,
-        pdf_url:       pdfUrl,
+        pdf_url:       pdfUrl || '(PDF upload unavailable)',
       });
 
-      statusEl.innerHTML = `✓ Waiver submitted! <a href="${pdfUrl}" target="_blank" rel="noopener" style="color:var(--cyan);">Click here to view/save your PDF</a>`;
+      if (pdfUrl) {
+        statusEl.innerHTML = `✓ Waiver submitted! <a href="${pdfUrl}" target="_blank" rel="noopener" style="color:var(--cyan);">Click here to view/save your PDF</a>`;
+      } else {
+        statusEl.textContent = '✓ Waiver submitted! Email sent. (PDF link unavailable — please screenshot this page as your record.)';
+      }
       statusEl.className = 'status-msg success';
       btn.textContent = 'Submitted ✓';
-      // Reset form after 4 seconds so another family can sign
       setTimeout(() => {
         document.getElementById('waiver-form').reset();
         clearSig();
@@ -442,10 +454,10 @@
         btn.textContent = 'Sign & Submit Waiver';
         statusEl.textContent = '';
         statusEl.className = 'status-msg';
-      }, 4000);
+      }, 6000);
     } catch (err) {
       console.error(err);
-      statusEl.textContent = 'Submission failed. Please try again or contact us directly.';
+      statusEl.textContent = 'Submission failed: ' + (err.message || err.text || JSON.stringify(err));
       statusEl.className = 'status-msg error';
       btn.disabled = false;
       btn.textContent = 'Sign & Submit Waiver';
