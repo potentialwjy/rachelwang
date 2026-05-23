@@ -268,6 +268,18 @@
   const DAYS   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const LABELS = { game: "Game", training: "Training", camp: "Camp", club: "Club Event" };
 
+  function startMinutes(timeStr) {
+    if (!timeStr) return 9999;
+    const start = timeStr.split('–')[0].trim();
+    const m = start.match(/(\d+):(\d+)\s*(AM|PM)?/);
+    if (!m) return 9999;
+    let h = parseInt(m[1]), min = parseInt(m[2]), suf = m[3];
+    if (!suf) suf = timeStr.includes('AM') ? 'AM' : (timeStr.includes('PM') ? 'PM' : '');
+    if (suf === 'PM' && h !== 12) h += 12;
+    if (suf === 'AM' && h === 12) h = 0;
+    return h * 60 + min;
+  }
+
   let calFilter = "all";
 
   function renderAll() {
@@ -275,7 +287,7 @@
     const today = new Date(); today.setHours(0,0,0,0);
     const sorted = [...EVENTS]
       .filter(e => calFilter === "all" || e.type === calFilter)
-      .sort((a,b) => a.date.localeCompare(b.date));
+      .sort((a,b) => a.date.localeCompare(b.date) || startMinutes(a.time) - startMinutes(b.time));
 
     if (!sorted.length) {
       container.innerHTML = '<div class="cal-empty">📅 No events to show.</div>';
