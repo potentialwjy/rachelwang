@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Schedule — Rachel Wang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --deep: #0d1f3c;
+    --blue: #0f4c8a;
+    --cyan: #00b4d8;
+    --aqua: #48cae4;
+    --white: #f8faff;
+    --gold: #f4c542;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--white); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 18px 48px; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(10,22,40,0.88); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0,180,216,0.15);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--cyan); text-decoration: none; }
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+  .nav-links a { color: rgba(248,250,255,0.6); text-decoration: none; font-size: 12px; letter-spacing: 1.8px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: rgba(248,250,255,0.5); text-decoration: none; font-size: 12px;
+    letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--cyan); }
+
+  .page-header {
+    padding: 120px 8vw 56px;
+    background: linear-gradient(160deg, #0a1628 0%, #0d2347 60%, #0a1628 100%);
+    border-bottom: 1px solid rgba(0,180,216,0.1);
+  }
+  .section-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(36px,6vw,72px); letter-spacing: 1px; line-height: 1; color: var(--white); margin-bottom: 20px; }
+  .section-divider { width: 48px; height: 2px; background: var(--cyan); margin-bottom: 0; }
+
+  .page-body { padding: 48px 8vw 96px; }
+
+  /* Filters */
+  .cal-filters { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+  .cal-filter {
+    padding: 8px 20px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(248,250,255,0.5); font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+  }
+  .cal-filter:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+  .cal-filter.active                     { border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
+  .cal-filter[data-filter="game"].active     { border-color: var(--gold);  color: var(--gold);  background: rgba(244,197,66,0.08); }
+  .cal-filter[data-filter="training"].active { border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
+  .cal-filter[data-filter="camp"].active     { border-color: #ff8c42;      color: #ff8c42;      background: rgba(255,140,66,0.08); }
+  .cal-filter[data-filter="club"].active     { border-color: #a78bfa;      color: #a78bfa;      background: rgba(167,139,250,0.08); }
+
+  /* Month header */
+  .cal-month-header {
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(248,250,255,0.3);
+    margin: 36px 0 14px; display: flex; align-items: center; gap: 16px;
+  }
+  .cal-month-header:first-child { margin-top: 0; }
+  .cal-month-header::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
+
+  /* Event card */
+  .cal-event {
+    display: flex; align-items: stretch; border-radius: 10px; margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.025);
+    overflow: hidden; transition: border-color 0.2s, transform 0.15s;
+  }
+  .cal-event:hover { border-color: rgba(255,255,255,0.14); transform: translateX(4px); }
+  .cal-event.past { opacity: 0.38; }
+  .cal-type-bar { width: 3px; flex-shrink: 0; }
+  .cal-event.type-game     .cal-type-bar { background: var(--gold); }
+  .cal-event.type-training .cal-type-bar { background: var(--cyan); }
+  .cal-event.type-camp     .cal-type-bar { background: #ff8c42; }
+  .cal-event.type-club     .cal-type-bar { background: #a78bfa; }
+  .cal-inner { display: flex; gap: 20px; align-items: center; padding: 18px 24px; flex: 1; min-width: 0; }
+  .cal-date-block { min-width: 48px; text-align: center; flex-shrink: 0; }
+  .cal-day { font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; color: var(--white); }
+  .cal-dow { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(248,250,255,0.32); margin-top: 2px; }
+  .cal-divider-v { width: 1px; background: rgba(255,255,255,0.07); align-self: stretch; flex-shrink: 0; }
+  .cal-details { flex: 1; min-width: 0; padding-left: 20px; }
+  .cal-title { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
+  .cal-meta { display: flex; gap: 18px; flex-wrap: wrap; }
+  .cal-meta-item { font-size: 12px; color: rgba(248,250,255,0.42); display: flex; align-items: center; gap: 5px; }
+  .cal-badge {
+    padding: 3px 11px; border-radius: 100px; font-size: 10px; font-weight: 500;
+    letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; margin-left: auto;
+  }
+  .cal-event.type-game     .cal-badge { background: rgba(244,197,66,0.12); color: var(--gold);  border: 1px solid rgba(244,197,66,0.25); }
+  .cal-event.type-training .cal-badge { background: rgba(0,180,216,0.12);  color: var(--cyan);  border: 1px solid rgba(0,180,216,0.25); }
+  .cal-event.type-camp     .cal-badge { background: rgba(255,140,66,0.12);  color: #ff8c42;      border: 1px solid rgba(255,140,66,0.25); }
+  .cal-event.type-club     .cal-badge { background: rgba(167,139,250,0.12); color: #a78bfa;      border: 1px solid rgba(167,139,250,0.25); }
+  .cal-empty { text-align: center; padding: 48px 24px; color: rgba(248,250,255,0.3); font-size: 15px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 10px; }
+
+  /* Legend */
+  .cal-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(248,250,255,0.45); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-dot.game     { background: var(--gold); }
+  .legend-dot.training { background: var(--cyan); }
+  .legend-dot.camp     { background: #ff8c42; }
+  .legend-dot.club     { background: #a78bfa; }
+
+  footer {
+    padding: 36px 8vw; background: var(--deep);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .f-logo { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; color: var(--cyan); }
+  footer p { font-size: 12px; color: rgba(248,250,255,0.28); }
+
+  @media (max-width: 820px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .page-header { padding: 100px 5vw 40px; }
+    .page-body { padding: 32px 5vw 64px; }
+    .cal-inner { padding: 14px 16px; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Rachel Wang</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#program">Summer Program</a></li>
+    <li><a href="index.html#schedule" style="color:var(--cyan);">Schedule</a></li>
+    <li><a href="index.html#signup">Sign Up</a></li>
+    <li><a href="index.html#reviews">Reviews</a></li>
+    <li><a href="waiver.html" style="color:var(--gold);">Waiver</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <a href="index.html" class="nav-back">← Back to Home</a>
+  <div style="height:20px;"></div>
+  <div class="section-label">Schedule</div>
+  <h1 class="section-title">2026 Summer Schedule</h1>
+  <div class="section-divider"></div>
+</div>
+
+<div class="page-body">
+  <div class="cal-legend">
+    <div class="legend-item"><div class="legend-dot game"></div>Games &amp; Tournaments</div>
+    <div class="legend-item"><div class="legend-dot training"></div>Training</div>
+    <div class="legend-item"><div class="legend-dot camp"></div>Mitty Summer Camp</div>
+    <div class="legend-item"><div class="legend-dot club"></div>Club Events</div>
+  </div>
+
+  <div class="cal-filters">
+    <button class="cal-filter active" data-filter="all">All Events</button>
+    <button class="cal-filter" data-filter="game">🏆 Games</button>
+    <button class="cal-filter" data-filter="training">🏊 Training</button>
+    <button class="cal-filter" data-filter="camp">🏫 Mitty Camp</button>
+    <button class="cal-filter" data-filter="club">🤽 Club Events</button>
+  </div>
+
+  <div id="cal-events"></div>
+</div>
+
+<footer>
+  <div class="f-logo">Rachel Wang</div>
+  <p>🤽 Water Polo &amp; Swimming · Summer 2026 · Bay Area, CA</p>
+  <p>© 2026 Rachel Wang · Stanford Water Polo Club · PAC Zone ODP</p>
+</footer>
+
+<script>
+  const EVENTS = [
+    // ── May ──
+    { date:"2026-05-19", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Menlo-Atherton High School" },
+    { date:"2026-05-20", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-21", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-22", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-26", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-27", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-28", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-29", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-05-31", time:"9:00–11:00 AM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    // ── June ──
+    { date:"2026-06-01", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-02", time:"",             title:"Practice", type:"training", location:"Menlo-Atherton High School" },
+    { date:"2026-06-03", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-04", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-05", time:"",             title:"Junior Olympic Quals", type:"game", location:"TBD" },
+    { date:"2026-06-06", time:"",             title:"Junior Olympic Quals", type:"game", location:"TBD" },
+    { date:"2026-06-07", time:"",             title:"Junior Olympic Quals", type:"game", location:"TBD" },
+    { date:"2026-06-08", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-09", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-11", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-12", time:"6:00–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-14", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
+    { date:"2026-06-15", time:"5:30–9:00 PM", title:"Golden State Valkyries Game", type:"club", location:"Chase Center, San Francisco", notes:"Warmups courtside 5:30 · Game ~7pm · In lieu of practice" },
+    { date:"2026-06-16", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-17", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-18", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-19", time:"",             title:"Futures Super Final", type:"game", location:"Orange County, CA" },
+    { date:"2026-06-19", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-20", time:"",             title:"Futures Super Final", type:"game", location:"Orange County, CA" },
+    { date:"2026-06-21", time:"",             title:"Futures Super Final", type:"game", location:"Orange County, CA" },
+    { date:"2026-06-22", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-23", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-24", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-25", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-26", time:"",             title:"Club Champs", type:"game", location:"Riverside, CA" },
+    { date:"2026-06-26", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-27", time:"",             title:"Club Champs", type:"game", location:"Riverside, CA" },
+    { date:"2026-06-28", time:"",             title:"Club Champs", type:"game", location:"Riverside, CA" },
+    { date:"2026-06-29", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-06-30", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    // ── July ──
+    { date:"2026-07-01", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-02", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-06", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-07", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-08", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-09", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-10", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-11", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
+    { date:"2026-07-12", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
+    { date:"2026-07-13", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-14", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-15", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-16", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-17", time:"9:00–10:30 AM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
+    { date:"2026-07-18", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
+    { date:"2026-07-19", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
+    { date:"2026-07-20", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
+    { date:"2026-07-21", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
+    // ── Mitty Summer Camps ──
+    // Faith in Action – Session 1 (Jun 15–18, no Jun 19)
+    { date:"2026-06-15", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 1 · Rising 9th Grade" },
+    { date:"2026-06-16", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 1 · Rising 9th Grade" },
+    { date:"2026-06-17", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 1 · Rising 9th Grade" },
+    { date:"2026-06-18", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 1 · Rising 9th Grade" },
+    // Water Polo All Skills (Jun 22–26)
+    { date:"2026-06-22", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 6–9th Grade" },
+    { date:"2026-06-23", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 6–9th Grade" },
+    { date:"2026-06-24", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 6–9th Grade" },
+    { date:"2026-06-25", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 6–9th Grade" },
+    { date:"2026-06-26", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 6–9th Grade" },
+    // Faith in Action – Session 3 (Jul 6–10)
+    { date:"2026-07-06", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 3 · Rising 9th Grade" },
+    { date:"2026-07-07", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 3 · Rising 9th Grade" },
+    { date:"2026-07-08", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 3 · Rising 9th Grade" },
+    { date:"2026-07-09", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 3 · Rising 9th Grade" },
+    { date:"2026-07-10", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School", notes:"Session 3 · Rising 9th Grade" },
+    // Debate (Jul 13–17)
+    { date:"2026-07-13", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 8–10th Grade" },
+    { date:"2026-07-14", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 8–10th Grade" },
+    { date:"2026-07-15", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 8–10th Grade" },
+    { date:"2026-07-16", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 8–10th Grade" },
+    { date:"2026-07-17", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School", notes:"Rising 8–10th Grade" },
+  ];
+
+  const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const DAYS   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const LABELS = { game: "Game", training: "Training", camp: "Camp", club: "Club Event" };
+
+  let calFilter = "all";
+
+  function renderAll() {
+    const container = document.getElementById('cal-events');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const sorted = [...EVENTS]
+      .filter(e => calFilter === "all" || e.type === calFilter)
+      .sort((a,b) => a.date.localeCompare(b.date));
+
+    if (!sorted.length) {
+      container.innerHTML = '<div class="cal-empty">📅 No events to show.</div>';
+      return;
+    }
+
+    let html = '';
+    let lastMonth = '';
+    sorted.forEach(ev => {
+      const d = new Date(ev.date + 'T00:00:00');
+      const monthKey = MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+      if (monthKey !== lastMonth) {
+        html += `<div class="cal-month-header">${monthKey}</div>`;
+        lastMonth = monthKey;
+      }
+      const isPast = d < today;
+      const meta = [
+        ev.time     ? `<span class="cal-meta-item">🕐 ${ev.time}</span>` : '',
+        ev.location ? `<span class="cal-meta-item">📍 ${ev.location}</span>` : '',
+        ev.notes    ? `<span class="cal-meta-item">· ${ev.notes}</span>` : '',
+      ].join('');
+      html += `
+        <div class="cal-event type-${ev.type}${isPast ? ' past' : ''}">
+          <div class="cal-type-bar"></div>
+          <div class="cal-inner">
+            <div class="cal-date-block">
+              <div class="cal-day">${String(d.getDate()).padStart(2,'0')}</div>
+              <div class="cal-dow">${DAYS[d.getDay()]}</div>
+            </div>
+            <div class="cal-divider-v"></div>
+            <div class="cal-details">
+              <div class="cal-title">${ev.title}</div>
+              <div class="cal-meta">${meta}</div>
+            </div>
+            <div class="cal-badge">${LABELS[ev.type]}</div>
+          </div>
+        </div>`;
+    });
+    container.innerHTML = html;
+  }
+
+  document.querySelectorAll('.cal-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cal-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      calFilter = btn.dataset.filter;
+      renderAll();
+    });
+  });
+
+  renderAll();
+</script>
+</body>
+</html>
