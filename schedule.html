@@ -281,6 +281,7 @@
   }
 
   let calFilter = "all";
+  let initialScrollDone = false;
 
   function renderAll() {
     const container = document.getElementById('cal-events');
@@ -294,9 +295,12 @@
       return;
     }
 
+    // Find the first event that is today or in the future (for auto-scroll)
+    const anchorIdx = sorted.findIndex(e => new Date(e.date + 'T00:00:00') >= today);
+
     let html = '';
     let lastMonth = '';
-    sorted.forEach(ev => {
+    sorted.forEach((ev, i) => {
       const d = new Date(ev.date + 'T00:00:00');
       const monthKey = MONTHS[d.getMonth()] + ' ' + d.getFullYear();
       if (monthKey !== lastMonth) {
@@ -304,13 +308,14 @@
         lastMonth = monthKey;
       }
       const isPast = d < today;
+      const isAnchor = !initialScrollDone && i === anchorIdx;
       const meta = [
         ev.time     ? `<span class="cal-meta-item">🕐 ${ev.time}</span>` : '',
         ev.location ? `<span class="cal-meta-item">📍 ${ev.location}</span>` : '',
         ev.notes    ? `<span class="cal-meta-item">· ${ev.notes}</span>` : '',
       ].join('');
       html += `
-        <div class="cal-event type-${ev.type}${isPast ? ' past' : ''}">
+        <div class="cal-event type-${ev.type}${isPast ? ' past' : ''}"${isAnchor ? ' id="today-anchor"' : ''}>
           <div class="cal-type-bar"></div>
           <div class="cal-inner">
             <div class="cal-date-block">
@@ -327,6 +332,15 @@
         </div>`;
     });
     container.innerHTML = html;
+
+    // On first load, scroll the anchor event to center of screen
+    if (!initialScrollDone && anchorIdx !== -1) {
+      initialScrollDone = true;
+      requestAnimationFrame(() => {
+        const anchor = document.getElementById('today-anchor');
+        if (anchor) anchor.scrollIntoView({ block: 'center', behavior: 'instant' });
+      });
+    }
   }
 
   document.querySelectorAll('.cal-filter').forEach(btn => {
