@@ -356,7 +356,6 @@
   .cal-event.type-game     .cal-type-bar { background: var(--gold); }
   .cal-event.type-training .cal-type-bar { background: var(--cyan); }
   .cal-event.type-camp     .cal-type-bar { background: #ff8c42; }
-  .cal-event.type-club     .cal-type-bar { background: #a78bfa; }
   .cal-inner { display: flex; gap: 20px; align-items: center; padding: 18px 24px; flex: 1; min-width: 0; }
   .cal-date-block { min-width: 48px; text-align: center; flex-shrink: 0; }
   .cal-day { font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; color: var(--white); }
@@ -373,7 +372,6 @@
   .cal-event.type-game     .cal-badge { background: rgba(244,197,66,0.12); color: var(--gold);  border: 1px solid rgba(244,197,66,0.25); }
   .cal-event.type-training .cal-badge { background: rgba(0,180,216,0.12);  color: var(--cyan);  border: 1px solid rgba(0,180,216,0.25); }
   .cal-event.type-camp     .cal-badge { background: rgba(255,140,66,0.12);  color: #ff8c42;      border: 1px solid rgba(255,140,66,0.25); }
-  .cal-event.type-club     .cal-badge { background: rgba(167,139,250,0.12); color: #a78bfa;      border: 1px solid rgba(167,139,250,0.25); }
   .cal-empty { text-align: center; padding: 48px 24px; color: rgba(248,250,255,0.3); font-size: 15px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 10px; }
 
   footer {
@@ -684,7 +682,7 @@
     { date:"2026-06-11", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
     { date:"2026-06-12", time:"6:00–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
     { date:"2026-06-14", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
-    { date:"2026-06-15", time:"5:30–9:00 PM", title:"Golden State Valkyries Game", type:"club", location:"Chase Center, San Francisco" },
+    { date:"2026-06-15", time:"5:30–9:00 PM", title:"Golden State Valkyries Game", type:"camp", location:"Chase Center, San Francisco" },
     { date:"2026-06-16", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
     { date:"2026-06-17", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
     { date:"2026-06-18", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
@@ -748,7 +746,7 @@
   ];
 
   const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const LABELS = { game: "Game", training: "Training", camp: "Camp", club: "Club Event" };
+  const LABELS = { game: "Game", training: "Training", camp: "Camp" };
 
   function startMinutes(timeStr) {
     if (!timeStr) return 9999;
