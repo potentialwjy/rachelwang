@@ -298,11 +298,16 @@
   }
 
   let calFilter = "all";
-  let initialScrollDone = false;
+  let weekScrollDone = false;
 
   function renderAll() {
     const container = document.getElementById('cal-events');
     const today = new Date(); today.setHours(0,0,0,0);
+
+    // Monday of the current week
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+
     const sorted = [...EVENTS]
       .filter(e => calFilter === "all" || e.type === calFilter)
       .sort((a,b) => a.date.localeCompare(b.date) || startMinutes(a.time) - startMinutes(b.time));
@@ -312,8 +317,8 @@
       return;
     }
 
-    // Find the first event that is today or in the future (for auto-scroll)
-    const anchorIdx = sorted.findIndex(e => new Date(e.date + 'T00:00:00') >= today);
+    // First event on or after Monday of this week
+    const weekAnchorIdx = sorted.findIndex(e => new Date(e.date + 'T00:00:00') >= monday);
 
     let html = '';
     let lastMonth = '';
@@ -325,14 +330,14 @@
         lastMonth = monthKey;
       }
       const isPast = d < today;
-      const isAnchor = !initialScrollDone && i === anchorIdx;
+      const isAnchor = !weekScrollDone && i === weekAnchorIdx;
       const meta = [
         ev.time     ? `<span class="cal-meta-item">🕐 ${ev.time}</span>` : '',
         ev.location ? `<span class="cal-meta-item">📍 ${ev.location}</span>` : '',
         ev.notes    ? `<span class="cal-meta-item">· ${ev.notes}</span>` : '',
       ].join('');
       html += `
-        <div class="cal-event type-${ev.type}${isPast ? ' past' : ''}"${isAnchor ? ' id="today-anchor"' : ''}>
+        <div class="cal-event type-${ev.type}${isPast ? ' past' : ''}"${isAnchor ? ' id="week-anchor"' : ''}>
           <div class="cal-type-bar"></div>
           <div class="cal-inner">
             <div class="cal-date-block">
@@ -350,11 +355,10 @@
     });
     container.innerHTML = html;
 
-    // On first load, scroll the anchor event to center of screen
-    if (!initialScrollDone && anchorIdx !== -1) {
-      initialScrollDone = true;
+    if (!weekScrollDone && weekAnchorIdx !== -1) {
+      weekScrollDone = true;
       requestAnimationFrame(() => {
-        const anchor = document.getElementById('today-anchor');
+        const anchor = document.getElementById('week-anchor');
         if (anchor) anchor.scrollIntoView({ block: 'center', behavior: 'instant' });
       });
     }
