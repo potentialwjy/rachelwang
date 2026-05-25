@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Full Schedule — Rachel Wang</title>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
@@ -60,7 +61,7 @@
   .cal-filter.active                     { border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
   .cal-filter[data-filter="game"].active     { border-color: var(--gold);  color: var(--gold);  background: rgba(244,197,66,0.08); }
   .cal-filter[data-filter="training"].active { border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
-  .cal-filter[data-filter="camp"].active     { border-color: #ff8c42;      color: #ff8c42;      background: rgba(255,140,66,0.08); }
+  .cal-filter[data-filter="mitty"].active    { border-color: #ff8c42;      color: #ff8c42;      background: rgba(255,140,66,0.08); }
   .cal-filter[data-filter="club"].active     { border-color: #a78bfa;      color: #a78bfa;      background: rgba(167,139,250,0.08); }
 
   /* Month header */
@@ -82,7 +83,7 @@
   .cal-type-bar { width: 3px; flex-shrink: 0; }
   .cal-event.type-game     .cal-type-bar { background: var(--gold); }
   .cal-event.type-training .cal-type-bar { background: var(--cyan); }
-  .cal-event.type-camp     .cal-type-bar { background: #ff8c42; }
+  .cal-event.type-mitty    .cal-type-bar { background: #ff8c42; }
   .cal-event.type-club     .cal-type-bar { background: #a78bfa; }
   .cal-inner { display: flex; gap: 20px; align-items: center; padding: 18px 24px; flex: 1; min-width: 0; }
   .cal-date-block { min-width: 48px; text-align: center; flex-shrink: 0; }
@@ -99,7 +100,7 @@
   }
   .cal-event.type-game     .cal-badge { background: rgba(244,197,66,0.12); color: var(--gold);  border: 1px solid rgba(244,197,66,0.25); }
   .cal-event.type-training .cal-badge { background: rgba(0,180,216,0.12);  color: var(--cyan);  border: 1px solid rgba(0,180,216,0.25); }
-  .cal-event.type-camp     .cal-badge { background: rgba(255,140,66,0.12);  color: #ff8c42;      border: 1px solid rgba(255,140,66,0.25); }
+  .cal-event.type-mitty    .cal-badge { background: rgba(255,140,66,0.12);  color: #ff8c42;      border: 1px solid rgba(255,140,66,0.25); }
   .cal-event.type-club     .cal-badge { background: rgba(167,139,250,0.12); color: #a78bfa;      border: 1px solid rgba(167,139,250,0.25); }
   .cal-empty { text-align: center; padding: 48px 24px; color: rgba(248,250,255,0.3); font-size: 15px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 10px; }
 
@@ -109,7 +110,7 @@
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .legend-dot.game     { background: var(--gold); }
   .legend-dot.training { background: var(--cyan); }
-  .legend-dot.camp     { background: #ff8c42; }
+  .legend-dot.mitty    { background: #ff8c42; }
   .legend-dot.club     { background: #a78bfa; }
 
   footer {
@@ -155,7 +156,7 @@
   <div class="cal-legend">
     <div class="legend-item"><div class="legend-dot game"></div>Games &amp; Tournaments</div>
     <div class="legend-item"><div class="legend-dot training"></div>Training</div>
-    <div class="legend-item"><div class="legend-dot camp"></div>Mitty Summer Camp</div>
+    <div class="legend-item"><div class="legend-dot mitty"></div>Archbishop Mitty High School</div>
     <div class="legend-item"><div class="legend-dot club"></div>Club Events</div>
   </div>
 
@@ -163,7 +164,7 @@
     <button class="cal-filter active" data-filter="all">All Events</button>
     <button class="cal-filter" data-filter="game">🏆 Games</button>
     <button class="cal-filter" data-filter="training">🏊 Training</button>
-    <button class="cal-filter" data-filter="camp">🏫 Mitty Camp</button>
+    <button class="cal-filter" data-filter="mitty">🏫 Mitty</button>
     <button class="cal-filter" data-filter="club">🤽 Club Events</button>
   </div>
 
@@ -240,33 +241,41 @@
     { date:"2026-07-21", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
     // ── Mitty Summer Camps ──
     // Faith in Action – Session 1 (Jun 15–18, no Jun 19)
-    { date:"2026-06-15", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-16", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-17", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-18", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
+    { date:"2026-06-15", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-16", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-17", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-18", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
     // Water Polo All Skills (Jun 22–26)
-    { date:"2026-06-22", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-23", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-24", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-25", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-26", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
+    { date:"2026-06-22", time:"1:00–3:00 PM", title:"Water Polo All Skills", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-23", time:"1:00–3:00 PM", title:"Water Polo All Skills", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-24", time:"1:00–3:00 PM", title:"Water Polo All Skills", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-25", time:"1:00–3:00 PM", title:"Water Polo All Skills", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-06-26", time:"1:00–3:00 PM", title:"Water Polo All Skills", type:"mitty", location:"Archbishop Mitty High School" },
     // Faith in Action – Session 3 (Jul 6–10)
-    { date:"2026-07-06", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-07", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-08", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-09", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-10", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
+    { date:"2026-07-06", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-07", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-08", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-09", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-10", time:"8:30 AM–12:00 PM", title:"Faith in Action", type:"mitty", location:"Archbishop Mitty High School" },
     // Debate (Jul 13–17)
-    { date:"2026-07-13", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-14", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-15", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-16", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-17", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
+    { date:"2026-07-13", time:"8:00 AM–3:00 PM", title:"Debate", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-14", time:"8:00 AM–3:00 PM", title:"Debate", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-15", time:"8:00 AM–3:00 PM", title:"Debate", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-16", time:"8:00 AM–3:00 PM", title:"Debate", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-07-17", time:"8:00 AM–3:00 PM", title:"Debate", type:"mitty", location:"Archbishop Mitty High School" },
+    // ── August ──
+    { date:"2026-08-12", time:"", title:"Freshman Orientation", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-08-13", time:"", title:"Freshman Orientation", type:"mitty", location:"Archbishop Mitty High School" },
+    { date:"2026-08-13", time:"10:00 AM–12:00 PM", title:"Women's Water Polo Tryouts (All Levels)", type:"mitty", location:"Archbishop Mitty High School Pool" },
+    { date:"2026-08-14", time:"10:00 AM–12:00 PM", title:"Women's Water Polo Tryouts (All Levels)", type:"mitty", location:"Archbishop Mitty High School Pool" },
+    { date:"2026-08-15", time:"10:00 AM–12:00 PM", title:"Women's Water Polo Tryouts (All Levels)", type:"mitty", location:"Archbishop Mitty High School Pool" },
+    { date:"2026-08-17", time:"10:00 AM–12:00 PM", title:"Women's Water Polo Tryouts (All Levels)", type:"mitty", location:"Archbishop Mitty High School Pool" },
+    { date:"2026-08-18", time:"", title:"First Day of School", type:"mitty", location:"Archbishop Mitty High School" },
   ];
 
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const DAYS   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const LABELS = { game: "Game", training: "Training", camp: "Camp", club: "Club Event" };
+  const LABELS = { game: "Game", training: "Training", mitty: "Mitty", club: "Club Event" };
 
   function startMinutes(timeStr) {
     if (!timeStr) return 9999;
