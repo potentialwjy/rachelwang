@@ -62,6 +62,7 @@
   .cal-filter[data-filter="game"].active     { border-color: var(--gold);  color: var(--gold);  background: rgba(244,197,66,0.08); }
   .cal-filter[data-filter="training"].active { border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
   .cal-filter[data-filter="mitty"].active    { border-color: #ff8c42;      color: #ff8c42;      background: rgba(255,140,66,0.08); }
+  .cal-filter[data-filter="camp"].active     { border-color: #34d399;      color: #34d399;      background: rgba(52,211,153,0.08); }
   .cal-filter[data-filter="club"].active     { border-color: #a78bfa;      color: #a78bfa;      background: rgba(167,139,250,0.08); }
 
   /* Month header */
@@ -84,6 +85,7 @@
   .cal-event.type-game     .cal-type-bar { background: var(--gold); }
   .cal-event.type-training .cal-type-bar { background: var(--cyan); }
   .cal-event.type-mitty    .cal-type-bar { background: #ff8c42; }
+  .cal-event.type-camp     .cal-type-bar { background: #34d399; }
   .cal-event.type-club     .cal-type-bar { background: #a78bfa; }
   .cal-inner { display: flex; gap: 20px; align-items: center; padding: 18px 24px; flex: 1; min-width: 0; }
   .cal-date-block { min-width: 48px; text-align: center; flex-shrink: 0; }
@@ -101,6 +103,7 @@
   .cal-event.type-game     .cal-badge { background: rgba(244,197,66,0.12); color: var(--gold);  border: 1px solid rgba(244,197,66,0.25); }
   .cal-event.type-training .cal-badge { background: rgba(0,180,216,0.12);  color: var(--cyan);  border: 1px solid rgba(0,180,216,0.25); }
   .cal-event.type-mitty    .cal-badge { background: rgba(255,140,66,0.12);  color: #ff8c42;      border: 1px solid rgba(255,140,66,0.25); }
+  .cal-event.type-camp     .cal-badge { background: rgba(52,211,153,0.12);  color: #34d399;      border: 1px solid rgba(52,211,153,0.25); }
   .cal-event.type-club     .cal-badge { background: rgba(167,139,250,0.12); color: #a78bfa;      border: 1px solid rgba(167,139,250,0.25); }
   .cal-empty { text-align: center; padding: 48px 24px; color: rgba(248,250,255,0.3); font-size: 15px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 10px; }
 
@@ -111,6 +114,7 @@
   .legend-dot.game     { background: var(--gold); }
   .legend-dot.training { background: var(--cyan); }
   .legend-dot.mitty    { background: #ff8c42; }
+  .legend-dot.camp     { background: #34d399; }
   .legend-dot.club     { background: #a78bfa; }
 
   footer {
@@ -157,6 +161,7 @@
     <div class="legend-item"><div class="legend-dot game"></div>Games &amp; Tournaments</div>
     <div class="legend-item"><div class="legend-dot training"></div>Training</div>
     <div class="legend-item"><div class="legend-dot mitty"></div>Archbishop Mitty High School</div>
+    <div class="legend-item"><div class="legend-dot camp"></div>Other Camps</div>
     <div class="legend-item"><div class="legend-dot club"></div>Club Events</div>
   </div>
 
@@ -165,6 +170,7 @@
     <button class="cal-filter" data-filter="game">🏆 Games</button>
     <button class="cal-filter" data-filter="training">🏊 Training</button>
     <button class="cal-filter" data-filter="mitty">🏫 Mitty</button>
+    <button class="cal-filter" data-filter="camp">⛺ Other Camps</button>
     <button class="cal-filter" data-filter="club">🤽 Club Events</button>
   </div>
 
@@ -180,6 +186,8 @@
 <script>
   const EVENTS = [
     // ── May ──
+    { date:"2026-05-30", time:"10:00 AM–4:00 PM", title:"Spartan Water Polo Camp", type:"camp", location:"Valley Christian High School" },
+    { date:"2026-05-31", time:"9:00 AM–3:00 PM",  title:"Spartan Water Polo Camp", type:"camp", location:"Valley Christian High School" },
     { date:"2026-05-19", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Menlo-Atherton High School" },
     { date:"2026-05-20", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
     { date:"2026-05-21", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
@@ -275,7 +283,7 @@
 
   const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const DAYS   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const LABELS = { game: "Game", training: "Training", mitty: "Mitty", club: "Club Event" };
+  const LABELS = { game: "Game", training: "Training", mitty: "Mitty", camp: "Camp", club: "Club Event" };
 
   function startMinutes(timeStr) {
     if (!timeStr) return 9999;
