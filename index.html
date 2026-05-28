@@ -280,6 +280,29 @@
   .signup-frame-wrap iframe { width: 100%; height: 700px; border: none; display: block; }
 
   #reviews { background: var(--navy); }
+
+  /* ── Water Polo Links ── */
+  #links { background: var(--deep); }
+  .links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    align-items: center;
+  }
+  .link-tile {
+    display: flex;
+    text-decoration: none;
+    transition: transform 0.2s, opacity 0.2s;
+    flex-shrink: 0;
+  }
+  .link-tile:hover { transform: scale(1.1); opacity: 0.85; }
+  .link-tile img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: contain;
+    display: block;
+  }
   .reviews-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 18px; margin-bottom: 40px; }
   .review-card {
     padding: 26px; border-radius: 10px; background: rgba(255,255,255,0.03);
@@ -408,6 +431,7 @@
     <li><a href="#schedule">Schedule</a></li>
     <li><a href="#signup">Sign Up</a></li>
     <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#links">Links</a></li>
     <li><a href="waiver.html" style="color:var(--gold);">Waiver</a></li>
   </ul>
 </nav>
@@ -647,6 +671,38 @@
     </div>
     <button class="submit-btn" onclick="submitReview()">Submit Review</button>
     <div class="success-msg" id="success-msg">✓ Thank you! Your review has been posted.</div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="section-label">Water Polo Community</div>
+  <div class="section-divider"></div>
+  <div class="links-grid">
+
+    <a class="link-tile" href="https://usawaterpolo.org/sports/2018/12/19/junior-olympics.aspx" target="_blank">
+      <img src="logo/logo-usawp.svg" alt="USA Water Polo Junior Olympics">
+    </a>
+
+    <a class="link-tile" href="https://usawaterpolo.org/sports/2019/1/23/regional-national-championships.aspx" target="_blank">
+      <img src="logo/odp-logo.png" alt="ODP">
+    </a>
+
+    <a class="link-tile" href="https://futureswpl.com" target="_blank">
+      <img src="logo/futures.png" alt="Futures Water Polo League" style="background:#0d1f3c;">
+    </a>
+
+    <a class="link-tile" href="https://sdshores.org/content/county-cup" target="_blank">
+      <img src="logo/logo-shores.png" alt="San Diego Cup" style="background:#fff;">
+    </a>
+
+    <a class="link-tile" href="https://www.mitty.com/athletics/womens-water-polo" target="_blank">
+      <img src="logo/AM.png" alt="Mitty Girls Water Polo">
+    </a>
+
+    <a class="link-tile" href="https://www.maxpreps.com/ca/san-jose/archbishop-mitty-monarchs/water-polo/girls/" target="_blank">
+      <img src="logo/AMWP.png" alt="MaxPreps" style="background:#1a1a1a;">
+    </a>
+
   </div>
 </section>
 
