@@ -839,7 +839,7 @@
 
   function buildGallery(filter) {
     const grid = document.getElementById('galaxy-grid');
-    const items = filter === 'all' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.type === filter);
+    const items = filter === 'all' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => filter === 'video' ? (i.type === 'video' || i.type === 'rawvideo') : i.type === filter);
 
     if (!items.length) {
       grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:64px 24px;color:rgba(248,250,255,0.3);font-size:15px;border:1px dashed rgba(255,255,255,0.1);border-radius:10px;">
