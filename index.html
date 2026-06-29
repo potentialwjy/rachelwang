@@ -350,52 +350,131 @@
     color: var(--cyan); font-size: 14px; margin-top: 14px;
   }
 
-  /* ── Schedule / Calendar ── */
-  #schedule { background: var(--navy); }
-  .cal-filters { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
-  .cal-filter {
+  /* ── Galaxy Photo & Video Gallery ── */
+  #galaxy { background: var(--navy); }
+  .galaxy-intro { color: rgba(248,250,255,0.52); font-size: 15px; max-width: 680px; margin-bottom: 48px; line-height: 1.75; }
+
+  .galaxy-filters { display: flex; gap: 10px; margin-bottom: 36px; flex-wrap: wrap; }
+  .galaxy-filter {
     padding: 8px 20px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
     background: transparent; color: rgba(248,250,255,0.5); font-family: 'DM Sans', sans-serif;
     font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
   }
-  .cal-filter:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
-  .cal-filter.active                    { border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
-  .cal-filter[data-filter="game"].active    { border-color: var(--gold);  color: var(--gold);  background: rgba(244,197,66,0.08); }
-  .cal-filter[data-filter="training"].active{ border-color: var(--cyan);  color: var(--cyan);  background: rgba(0,180,216,0.08); }
-  .cal-filter[data-filter="camp"].active    { border-color: #ff8c42;      color: #ff8c42;      background: rgba(255,140,66,0.08); }
-  .cal-month-header {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(248,250,255,0.3);
-    margin: 32px 0 14px; display: flex; align-items: center; gap: 16px;
+  .galaxy-filter:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+  .galaxy-filter.active { border-color: var(--cyan); color: var(--cyan); background: rgba(0,180,216,0.08); }
+  .galaxy-filter[data-filter="video"].active { border-color: var(--gold); color: var(--gold); background: rgba(244,197,66,0.08); }
+
+  .galaxy-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
-  .cal-month-header::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.07); }
-  .cal-event {
-    display: flex; gap: 0; align-items: stretch; border-radius: 10px; margin-bottom: 10px;
-    border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.025);
-    overflow: hidden; transition: border-color 0.2s, transform 0.15s;
+  @media (max-width: 900px) { .galaxy-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .galaxy-grid { grid-template-columns: 1fr; } }
+
+  .galaxy-item {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0,180,216,0.12);
+    background: var(--deep);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
   }
-  .cal-event:hover { border-color: rgba(255,255,255,0.14); transform: translateX(4px); }
-  .cal-event.past { opacity: 0.38; }
-  .cal-type-bar { width: 3px; flex-shrink: 0; }
-  .cal-event.type-game     .cal-type-bar { background: var(--gold); }
-  .cal-event.type-training .cal-type-bar { background: var(--cyan); }
-  .cal-event.type-camp     .cal-type-bar { background: #ff8c42; }
-  .cal-inner { display: flex; gap: 20px; align-items: center; padding: 18px 24px; flex: 1; min-width: 0; }
-  .cal-date-block { min-width: 48px; text-align: center; flex-shrink: 0; }
-  .cal-day { font-family: 'Bebas Neue', sans-serif; font-size: 32px; line-height: 1; color: var(--white); }
-  .cal-dow { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(248,250,255,0.32); margin-top: 2px; }
-  .cal-divider-v { width: 1px; background: rgba(255,255,255,0.07); align-self: stretch; flex-shrink: 0; }
-  .cal-details { flex: 1; min-width: 0; padding-left: 20px; }
-  .cal-title { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 6px; }
-  .cal-meta { display: flex; gap: 18px; flex-wrap: wrap; }
-  .cal-meta-item { font-size: 12px; color: rgba(248,250,255,0.42); display: flex; align-items: center; gap: 5px; }
-  .cal-badge {
-    padding: 3px 11px; border-radius: 100px; font-size: 10px; font-weight: 500;
-    letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; margin-left: auto;
+  .galaxy-item:hover {
+    transform: scale(1.02);
+    border-color: rgba(0,180,216,0.45);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    z-index: 2;
   }
-  .cal-event.type-game     .cal-badge { background: rgba(244,197,66,0.12); color: var(--gold);  border: 1px solid rgba(244,197,66,0.25); }
-  .cal-event.type-training .cal-badge { background: rgba(0,180,216,0.12);  color: var(--cyan);  border: 1px solid rgba(0,180,216,0.25); }
-  .cal-event.type-camp     .cal-badge { background: rgba(255,140,66,0.12);  color: #ff8c42;      border: 1px solid rgba(255,140,66,0.25); }
-  .cal-empty { text-align: center; padding: 48px 24px; color: rgba(248,250,255,0.3); font-size: 15px; border: 1px dashed rgba(255,255,255,0.1); border-radius: 10px; }
+  .galaxy-item img {
+    width: 100%; display: block; object-fit: cover;
+    transition: opacity 0.3s;
+  }
+  .galaxy-item .galaxy-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,22,40,0.82) 0%, transparent 55%);
+    opacity: 0; transition: opacity 0.25s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 16px 18px;
+  }
+  .galaxy-item:hover .galaxy-overlay { opacity: 1; }
+  .galaxy-overlay-title { font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .galaxy-overlay-tag {
+    display: inline-block; padding: 2px 10px; border-radius: 100px;
+    font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    background: rgba(0,180,216,0.2); color: var(--cyan); border: 1px solid rgba(0,180,216,0.35);
+  }
+  .galaxy-overlay-tag.video { background: rgba(244,197,66,0.15); color: var(--gold); border-color: rgba(244,197,66,0.35); }
+
+  /* Video items — 16/9 iframe embed */
+  .galaxy-item.video-item { break-inside: avoid; }
+  .galaxy-video-wrap {
+    position: relative; width: 100%; padding-top: 56.25%;
+    background: #000;
+  }
+  .galaxy-video-wrap iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+  }
+  .galaxy-play-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: rgba(244,197,66,0.9); color: var(--navy);
+    font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 6px; pointer-events: none;
+  }
+
+  /* Caption strip below video */
+  .galaxy-caption {
+    padding: 12px 16px;
+    font-size: 13px; color: rgba(248,250,255,0.6); line-height: 1.5;
+  }
+  .galaxy-caption strong { color: var(--white); font-weight: 500; }
+
+  /* Lightbox */
+  .galaxy-lightbox {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(5,12,26,0.96); backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .galaxy-lightbox.open { display: flex; }
+  .galaxy-lightbox img {
+    max-width: 90vw; max-height: 85vh; border-radius: 10px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+    object-fit: contain;
+  }
+  .galaxy-lb-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; color: rgba(248,250,255,0.55);
+    font-size: 36px; cursor: pointer; line-height: 1; transition: color 0.2s;
+  }
+  .galaxy-lb-close:hover { color: var(--white); }
+  .galaxy-lb-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(10,22,40,0.7); border: 1px solid rgba(0,180,216,0.3);
+    color: var(--white); font-size: 32px; width: 54px; height: 54px;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s; line-height: 1; z-index: 2;
+  }
+  .galaxy-lb-nav:hover { background: rgba(0,180,216,0.2); border-color: var(--cyan); }
+  .galaxy-lb-prev { left: 20px; }
+  .galaxy-lb-next { right: 20px; }
+  .galaxy-lb-caption {
+    position: absolute; bottom: 24px; left: 0; right: 0;
+    text-align: center; color: rgba(248,250,255,0.45); font-size: 13px;
+  }
+
+  /* Upload hint banner */
+  .galaxy-hint {
+    margin-top: 40px; padding: 20px 24px;
+    border: 1px dashed rgba(0,180,216,0.25); border-radius: 10px;
+    background: rgba(0,180,216,0.04);
+    display: flex; align-items: center; gap: 16px;
+    color: rgba(248,250,255,0.45); font-size: 13px; line-height: 1.6;
+  }
+  .galaxy-hint .hint-icon { font-size: 28px; flex-shrink: 0; }
+  .galaxy-hint a { color: var(--cyan); text-decoration: none; }
+  .galaxy-hint a:hover { text-decoration: underline; }
 
   footer {
     padding: 36px 8vw; background: var(--deep);
@@ -427,11 +506,12 @@
   <div class="nav-logo">Rachel Wang</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#galaxy">Gallery</a></li>
     <li><a href="#program">Summer Program</a></li>
-    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#galaxy">Gallery</a></li>
     <li><a href="#signup">Sign Up</a></li>
     <li><a href="#reviews">Reviews</a></li>
-    <li><a href="#links">Links</a></li>
+
     <li><a href="waiver.html" style="color:var(--gold);">Waiver</a></li>
   </ul>
 </nav>
@@ -547,6 +627,33 @@
   </div>
 </section>
 
+<section id="galaxy">
+  <div class="section-label">Teaching Gallery</div>
+  <h2 class="section-title">Coaching in Action</h2>
+  <div class="section-divider"></div>
+  <p class="galaxy-intro">Moments from the pool — Rachel teaching girls swimming fundamentals and water polo skills. Photos and videos added as the summer progresses.</p>
+
+  <div class="galaxy-filters">
+    <button class="galaxy-filter active" data-filter="all">All</button>
+    <button class="galaxy-filter" data-filter="photo">Photos</button>
+    <button class="galaxy-filter" data-filter="video">Videos</button>
+  </div>
+
+  <div class="galaxy-grid" id="galaxy-grid">
+    <!-- Items injected by JS — add your Google Drive links in GALLERY_ITEMS below -->
+  </div>
+
+</section>
+
+<!-- Lightbox -->
+<div class="galaxy-lightbox" id="galaxy-lightbox" onclick="closeLightbox(event)">
+  <button class="galaxy-lb-close" onclick="closeLightbox()">&times;</button>
+  <button class="galaxy-lb-nav galaxy-lb-prev" onclick="navigateLightbox(-1)">&#8249;</button>
+  <img id="gallery-lb-img" src="" alt="">
+  <button class="galaxy-lb-nav galaxy-lb-next" onclick="navigateLightbox(1)">&#8250;</button>
+  <div class="galaxy-lb-caption" id="gallery-lb-caption"></div>
+</div>
+
 <section id="program">
   <div class="section-label">Summer Program</div>
   <h2 class="section-title">2026 Free Summer Clinic</h2>
@@ -613,18 +720,6 @@
       <a href="https://www.signupgenius.com/go/10C0949A4A82CA2FBC70-63331509-rachels#/" target="_blank" style="margin-left:auto;background:var(--gold);color:#0a1628;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;padding:10px 18px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Register →</a>
     </div>
 
-  </div>
-</section>
-
-<section id="schedule">
-  <div class="section-label">Schedule</div>
-  <h2 class="section-title" id="week-title">This Week</h2>
-  <div class="section-divider"></div>
-  <div id="cal-events"></div>
-  <div style="margin-top:28px;">
-    <a href="schedule.html" target="_blank" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;">
-      View Full Schedule <span style="font-size:16px;">→</span>
-    </a>
   </div>
 </section>
 
@@ -713,170 +808,180 @@
 </footer>
 
 <script>
-  // ── Calendar (shared event data) ──
-  const EVENTS = [
-    // ── May ──
-    { date:"2026-05-19", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Menlo-Atherton High School" },
-    { date:"2026-05-20", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-21", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-22", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-26", time:"5:45–8:00 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-27", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-28", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-29", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-05-31", time:"9:00–11:00 AM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    // ── June ──
-    { date:"2026-06-01", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-02", time:"",             title:"Practice", type:"training", location:"Menlo-Atherton High School" },
-    { date:"2026-06-03", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-04", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-05", time:"",             title:"Junior Olympic Quals", type:"game", location:"Marin, CA" },
-    { date:"2026-06-06", time:"",             title:"Junior Olympic Quals", type:"game", location:"Marin, CA" },
-    { date:"2026-06-07", time:"",             title:"Junior Olympic Quals", type:"game", location:"Marin, CA" },
-    { date:"2026-06-08", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-09", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-11", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-12", time:"6:00–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-14", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
-    { date:"2026-06-15", time:"5:30–9:00 PM", title:"Golden State Valkyries Game", type:"camp", location:"Chase Center, San Francisco" },
-    { date:"2026-06-16", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-17", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-18", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-19", time:"",             title:"Futures Super Final", type:"game", location:"Orange County, CA" },
-    { date:"2026-06-19", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-20", time:"",             title:"Futures Super Final", type:"game", location:"Orange County, CA" },
-    { date:"2026-06-21", time:"",             title:"Futures Super Final", type:"game", location:"Orange County, CA" },
-    { date:"2026-06-22", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-23", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-24", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-25", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-26", time:"",             title:"Club Champs", type:"game", location:"Riverside, CA" },
-    { date:"2026-06-26", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-27", time:"",             title:"Club Champs", type:"game", location:"Riverside, CA" },
-    { date:"2026-06-28", time:"",             title:"Club Champs", type:"game", location:"Riverside, CA" },
-    { date:"2026-06-29", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-06-30", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    // ── July ──
-    { date:"2026-07-01", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-02", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-06", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-07", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-08", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-09", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-10", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-11", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
-    { date:"2026-07-12", time:"",             title:"Santa Cruz Tournament", type:"game", location:"Santa Cruz" },
-    { date:"2026-07-13", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-14", time:"5:15–7:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-15", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-16", time:"6:15–8:30 PM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-17", time:"9:00–10:30 AM", title:"Practice", type:"training", location:"Avery Aquatics Center" },
-    { date:"2026-07-18", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
-    { date:"2026-07-19", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
-    { date:"2026-07-20", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
-    { date:"2026-07-21", time:"",             title:"Junior Olympics", type:"game", location:"Orange County, CA" },
-    // ── Mitty Summer Camps ──
-    // Faith in Action – Session 1 (Jun 15–18, no Jun 19)
-    { date:"2026-06-15", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-16", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-17", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-18", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    // Water Polo All Skills (Jun 22–26)
-    { date:"2026-06-22", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-23", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-24", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-25", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-06-26", time:"1:00–3:00 PM", title:"Mitty Camp – Water Polo All Skills", type:"camp", location:"Archbishop Mitty High School" },
-    // Faith in Action – Session 3 (Jul 6–10)
-    { date:"2026-07-06", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-07", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-08", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-09", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-10", time:"8:30 AM–12:00 PM", title:"Mitty Camp – Faith in Action", type:"camp", location:"Archbishop Mitty High School" },
-    // Debate (Jul 13–17)
-    { date:"2026-07-13", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-14", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-15", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-16", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
-    { date:"2026-07-17", time:"8:00 AM–3:00 PM", title:"Mitty Camp – Debate", type:"camp", location:"Archbishop Mitty High School" },
+  // ── Galaxy Photo & Video Gallery ──
+  //
+  // HOW TO ADD ITEMS:
+  //
+  // PHOTO from Google Drive:
+  //   1. Upload photo to Google Drive → right-click → "Get link" → set to "Anyone with link"
+  //   2. Copy the file ID from the URL:  https://drive.google.com/file/d/FILE_ID/view
+  //   3. Add an entry: { type:"photo", src:"https://drive.google.com/thumbnail?id=FILE_ID&sz=w800", caption:"Description" }
+  //
+  // VIDEO from Google Drive:
+  //   1. Upload video to Google Drive → right-click → "Get link" → set to "Anyone with link"
+  //   2. Copy the file ID from the URL
+  //   3. Add an entry: { type:"video", driveId:"FILE_ID", caption:"Description" }
+  //
+  // VIDEO from YouTube:
+  //   { type:"video", youtubeId:"VIDEO_ID", caption:"Description" }
+
+  const GALLERY_ITEMS = [
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1FduVBAVMeTbNmDhILx2xBBnq_9bDd_ff", caption:"Coaching session" },
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1Wy7lCVFKRt0elwqVaVmGWIgxuq_TnGoK", caption:"Coaching session" },
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1UH3EQli47sv-CgV-TAJP6SjzKJKT4Lpg", caption:"Coaching session" },
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1IPrOeuk6IjaLt7nmoWv3OWUDEjo3W5UC", caption:"Coaching session" },
+    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_6888.MOV", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot1.png", caption:"Coaching session" },
+    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_7041.MOV", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot2.png", caption:"Coaching session" },
+    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_7039%202.mov", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot3.png", caption:"Coaching session" },
   ];
 
-  const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  const LABELS = { game: "Game", training: "Training", camp: "Camp" };
+  let activeFilter = 'all';
 
-  function startMinutes(timeStr) {
-    if (!timeStr) return 9999;
-    const start = timeStr.split('–')[0].trim();
-    const m = start.match(/(\d+):(\d+)\s*(AM|PM)?/);
-    if (!m) return 9999;
-    let h = parseInt(m[1]), min = parseInt(m[2]), suf = m[3];
-    if (!suf) suf = timeStr.includes('AM') ? 'AM' : (timeStr.includes('PM') ? 'PM' : '');
-    if (suf === 'PM' && h !== 12) h += 12;
-    if (suf === 'AM' && h === 12) h = 0;
-    return h * 60 + min;
-  }
+  function buildGallery(filter) {
+    const grid = document.getElementById('galaxy-grid');
+    const items = filter === 'all' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.type === filter);
 
-  function calEventHTML(ev) {
-    const d = new Date(ev.date + 'T00:00:00');
-    const today = new Date(); today.setHours(0,0,0,0);
-    const isPast = d < today;
-    const meta = [
-      ev.time     ? `<span class="cal-meta-item">🕐 ${ev.time}</span>` : '',
-      ev.location ? `<span class="cal-meta-item">📍 ${ev.location}</span>` : '',
-      ev.notes    ? `<span class="cal-meta-item">· ${ev.notes}</span>` : '',
-    ].join('');
-    return `
-      <div class="cal-event type-${ev.type}${isPast ? ' past' : ''}">
-        <div class="cal-type-bar"></div>
-        <div class="cal-inner">
-          <div class="cal-date-block">
-            <div class="cal-day">${String(d.getDate()).padStart(2,'0')}</div>
-            <div class="cal-dow">${DAYS[d.getDay()]}</div>
-          </div>
-          <div class="cal-divider-v"></div>
-          <div class="cal-details">
-            <div class="cal-title">${ev.title}</div>
-            <div class="cal-meta">${meta}</div>
-          </div>
-          <div class="cal-badge">${LABELS[ev.type]}</div>
-        </div>
+    if (!items.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:64px 24px;color:rgba(248,250,255,0.3);font-size:15px;border:1px dashed rgba(255,255,255,0.1);border-radius:10px;">
+        <div style="font-size:36px;margin-bottom:12px;">🤽</div>
+        No ${filter === 'all' ? '' : filter + ' '}content yet — check back soon!
       </div>`;
-  }
-
-  // Index page: show events in the current Mon–Sun calendar week
-  function renderWeekCalendar() {
-    const container = document.getElementById('cal-events');
-    if (!container) return;
-
-    const today = new Date(); today.setHours(0,0,0,0);
-    const dow = today.getDay(); // 0=Sun … 6=Sat
-    const monday = new Date(today);
-    monday.setDate(today.getDate() - (dow === 0 ? 6 : dow - 1));
-    const sunday = new Date(monday);
-    sunday.setDate(monday.getDate() + 6);
-
-    // Update section title with date range
-    const MONTHS_SHORT = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const fmt = d => `${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}`;
-    const titleEl = document.getElementById('week-title');
-    if (titleEl) {
-      titleEl.textContent = monday.getMonth() === sunday.getMonth()
-        ? `${MONTHS_SHORT[monday.getMonth()]} ${monday.getDate()}–${sunday.getDate()}`
-        : `${fmt(monday)} – ${fmt(sunday)}`;
+      return;
     }
 
-    const upcoming = EVENTS
-      .filter(e => { const d = new Date(e.date + 'T00:00:00'); return d >= monday && d <= sunday; })
-      .sort((a,b) => a.date.localeCompare(b.date) || startMinutes(a.time) - startMinutes(b.time));
+    grid.innerHTML = items.map((item, i) => {
+    if (item.type === 'video' || item.type === 'rawvideo') {
+        const allItems = GALLERY_ITEMS;
+        const itemIndex = allItems.indexOf(item);
+        const content = item.type === 'rawvideo'
+          ? `<video style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" src="${item.src}" ${item.poster ? `poster="${item.poster}"` : ''} playsinline muted loop></video>`
+          : (() => {
+              const src = item.youtubeId
+                ? `https://www.youtube.com/embed/${item.youtubeId}?rel=0`
+                : `https://drive.google.com/file/d/${item.driveId}/preview`;
+              return `<iframe src="${src}" allowfullscreen allow="autoplay" style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>`;
+            })();
+        return `<div class="galaxy-item video-item" data-type="video" style="cursor:pointer;" onclick="openVideoLightbox(${itemIndex})">
+          <div class="galaxy-video-wrap" style="pointer-events:none;">
+            ${content}
+          </div>
+          <span class="galaxy-play-badge">▶ Video</span>
+          ${item.caption ? `<div class="galaxy-caption"><strong>${item.caption}</strong></div>` : ''}
+        </div>`;
+      } else {
+        const photoItems = GALLERY_ITEMS.filter(x => x.type === 'photo');
+        const photoIndex = photoItems.indexOf(item);
+        return `<div class="galaxy-item" data-type="photo" onclick="openLightbox(${photoIndex})">
+          <img src="${item.src}" alt="${item.caption || 'Coaching photo'}" loading="lazy">
+          <div class="galaxy-overlay">
+            <div class="galaxy-overlay-title">${item.caption || ''}</div>
+            <span class="galaxy-overlay-tag">Photo</span>
+          </div>
+        </div>`;
+      }
+    }).join('');
+  }
 
-    if (!upcoming.length) {
-      container.innerHTML = '<div class="cal-empty">No events this week.<br><span style="font-size:13px;opacity:.6;">Check the full schedule for upcoming events.</span></div>';
+  document.querySelectorAll('.galaxy-filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.galaxy-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      buildGallery(activeFilter);
+    });
+  });
+
+  let currentLbIndex = 0;
+
+  function getAllItems() {
+    return activeFilter === 'all' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(i => i.type === activeFilter);
+  }
+
+  function openLightbox(photoIndex) {
+    const photoItems = GALLERY_ITEMS.filter(x => x.type === 'photo');
+    const item = photoItems[photoIndex];
+    if (!item) return;
+    // find this item's position in the full (or filtered) navigable list
+    const all = getAllItems();
+    currentLbIndex = all.indexOf(item);
+    showLightboxItem(currentLbIndex);
+    document.getElementById('galaxy-lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxItem(index) {
+    const all = getAllItems();
+    if (index < 0 || index >= all.length) return;
+    currentLbIndex = index;
+    const item = all[index];
+    const lb = document.getElementById('galaxy-lightbox');
+    const img = document.getElementById('gallery-lb-img');
+    const cap = document.getElementById('gallery-lb-caption');
+
+    // remove old video embed if any
+    const oldVideo = lb.querySelector('.lb-video-wrap');
+    if (oldVideo) oldVideo.remove();
+    img.style.display = '';
+
+    if (item.type === 'video' || item.type === 'rawvideo') {
+      img.style.display = 'none';
+      const wrap = document.createElement('div');
+      wrap.className = 'lb-video-wrap';
+      wrap.style.cssText = 'width:min(90vw,960px);aspect-ratio:16/9;border-radius:10px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.8);';
+      if (item.type === 'rawvideo') {
+        wrap.innerHTML = `<video style="width:100%;height:100%;object-fit:contain;background:#000;" src="${item.src}" ${item.poster ? `poster="${item.poster}"` : ''} controls autoplay playsinline></video>`;
+      } else {
+        const src = item.youtubeId
+          ? `https://www.youtube.com/embed/${item.youtubeId}?autoplay=1&rel=0`
+          : `https://drive.google.com/file/d/${item.driveId}/preview`;
+        wrap.innerHTML = `<iframe src="${src}" style="width:100%;height:100%;border:none;" allowfullscreen allow="autoplay"></iframe>`;
+      }
+      lb.insertBefore(wrap, cap);
     } else {
-      container.innerHTML = upcoming.map(calEventHTML).join('');
+      img.src = item.src;
+      img.alt = item.caption || '';
     }
+
+    cap.textContent = `${item.caption || ''}  (${index + 1} / ${all.length})`;
+
+    // show/hide nav arrows
+    lb.querySelector('.galaxy-lb-prev').style.visibility = index === 0 ? 'hidden' : 'visible';
+    lb.querySelector('.galaxy-lb-next').style.visibility = index === all.length - 1 ? 'hidden' : 'visible';
   }
 
-  renderWeekCalendar();
+  function navigateLightbox(dir) {
+    const all = getAllItems();
+    const next = currentLbIndex + dir;
+    if (next >= 0 && next < all.length) showLightboxItem(next);
+  }
+
+  function closeLightbox(e) {
+    if (e && e.target !== document.getElementById('galaxy-lightbox') && !e.target.classList.contains('galaxy-lb-close')) return;
+    document.getElementById('galaxy-lightbox').classList.remove('open');
+    document.getElementById('gallery-lb-img').src = '';
+    const oldVideo = document.getElementById('galaxy-lightbox').querySelector('.lb-video-wrap');
+    if (oldVideo) oldVideo.remove();
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('galaxy-lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox({ target: lb });
+    if (e.key === 'ArrowLeft')  navigateLightbox(-1);
+    if (e.key === 'ArrowRight') navigateLightbox(1);
+  });
+
+  function openVideoLightbox(itemIndex) {
+    const all = getAllItems();
+    currentLbIndex = all.findIndex((x, i) => GALLERY_ITEMS.indexOf(x) === itemIndex);
+    if (currentLbIndex === -1) currentLbIndex = 0;
+    showLightboxItem(currentLbIndex);
+    document.getElementById('galaxy-lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  buildGallery('all');
 
   // ── Supabase config ──
   const SUPABASE_URL = 'https://shidxyypipcqbyftaqgi.supabase.co';
