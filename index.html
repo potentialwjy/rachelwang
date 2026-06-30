@@ -506,7 +506,6 @@
   <div class="nav-logo">Rachel Wang</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
-    <li><a href="#galaxy">Gallery</a></li>
     <li><a href="#program">Summer Program</a></li>
     <li><a href="#galaxy">Gallery</a></li>
     <li><a href="#signup">Sign Up</a></li>
@@ -539,7 +538,7 @@
     <div class="hero-credentials">
       <span class="cred-pill">🏊 Stanford Water Polo Club</span>
       <span class="cred-pill">⭐ PAC Zone ODP Roster</span>
-      <span class="cred-pill gold">Harker Upper School</span>
+      <span class="cred-pill gold">🥈 USCC Runner-up</span>
       <span class="cred-pill gold">Archbishop Mitty High</span>
       <span class="cred-pill odp">🛡️ Olympic Dev Program</span>
     </div>
@@ -597,12 +596,13 @@
       <div class="bio-highlights">
         <h4>Credentials &amp; Achievements</h4>
         <div class="bio-item"><div class="bio-dot"></div><span>Stanford Water Polo Club</span></div>
-        <div class="bio-item"><div class="bio-dot"></div><span>PAC Zone Roster — Olympic Development Program (ODP)</span></div>
+        <div class="bio-item"><div class="bio-dot"></div><span>2026 PAC Zone Roster — Olympic Development Program (ODP)</span></div>
+        <div class="bio-item"><div class="bio-dot"></div><span>2026 USCC Runner-up</span></div>
         <div class="bio-item"><div class="bio-dot"></div><span>Accepted: Harker Upper School</span></div>
         <div class="bio-item"><div class="bio-dot"></div><span>Accepted: Archbishop Mitty High School</span></div>
       </div>
     </div>
-    <div class="about-cards">
+    <div class="about-cards" style="padding-top: 220px;">
       <div class="about-card">
         <div class="icon">🏊‍♀️</div>
         <h4>Swim Fundamentals</h4>
@@ -826,13 +826,15 @@
   //   { type:"video", youtubeId:"VIDEO_ID", caption:"Description" }
 
   const GALLERY_ITEMS = [
-    { type:"photo", src:"https://lh3.googleusercontent.com/d/1FduVBAVMeTbNmDhILx2xBBnq_9bDd_ff", caption:"Coaching session" },
-    { type:"photo", src:"https://lh3.googleusercontent.com/d/1Wy7lCVFKRt0elwqVaVmGWIgxuq_TnGoK", caption:"Coaching session" },
-    { type:"photo", src:"https://lh3.googleusercontent.com/d/1UH3EQli47sv-CgV-TAJP6SjzKJKT4Lpg", caption:"Coaching session" },
-    { type:"photo", src:"https://lh3.googleusercontent.com/d/1IPrOeuk6IjaLt7nmoWv3OWUDEjo3W5UC", caption:"Coaching session" },
-    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_6888.MOV", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot1.png", caption:"Coaching session" },
-    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_7041.MOV", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot2.png", caption:"Coaching session" },
-    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_7039%202.mov", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot3.png", caption:"Coaching session" },
+    // Jun 15
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1IPrOeuk6IjaLt7nmoWv3OWUDEjo3W5UC", caption:"Coaching session", date:"Jun 15, 2026" },
+    // Jun 16
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1UH3EQli47sv-CgV-TAJP6SjzKJKT4Lpg", caption:"Coaching session", date:"Jun 16, 2026" },
+    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_6888.MOV", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot1.png", caption:"Coaching session", date:"Jun 16, 2026" },
+    // Jun 25
+    { type:"photo", src:"https://lh3.googleusercontent.com/d/1FduVBAVMeTbNmDhILx2xBBnq_9bDd_ff", caption:"Coaching session", date:"Jun 25, 2026" },
+    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_7041.MOV", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot2.png", caption:"Coaching session", date:"Jun 25, 2026" },
+    { type:"rawvideo", src:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/IMG_7039%202.mov", poster:"https://raw.githubusercontent.com/potentialwjy/rachelwang/main/screenshot3.png", caption:"Coaching session", date:"Jun 25, 2026" },
   ];
 
   let activeFilter = 'all';
@@ -849,36 +851,48 @@
       return;
     }
 
-    grid.innerHTML = items.map((item, i) => {
-    if (item.type === 'video' || item.type === 'rawvideo') {
-        const allItems = GALLERY_ITEMS;
-        const itemIndex = allItems.indexOf(item);
-        const content = item.type === 'rawvideo'
-          ? `<video style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" src="${item.src}" ${item.poster ? `poster="${item.poster}"` : ''} playsinline muted loop></video>`
-          : (() => {
-              const src = item.youtubeId
-                ? `https://www.youtube.com/embed/${item.youtubeId}?rel=0`
-                : `https://drive.google.com/file/d/${item.driveId}/preview`;
-              return `<iframe src="${src}" allowfullscreen allow="autoplay" style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>`;
-            })();
-        return `<div class="galaxy-item video-item" data-type="video" style="cursor:pointer;" onclick="openVideoLightbox(${itemIndex})">
-          <div class="galaxy-video-wrap" style="pointer-events:none;">
-            ${content}
-          </div>
-          <span class="galaxy-play-badge">▶ Video</span>
-          ${item.caption ? `<div class="galaxy-caption"><strong>${item.caption}</strong></div>` : ''}
-        </div>`;
-      } else {
-        const photoItems = GALLERY_ITEMS.filter(x => x.type === 'photo');
-        const photoIndex = photoItems.indexOf(item);
-        return `<div class="galaxy-item" data-type="photo" onclick="openLightbox(${photoIndex})">
-          <img src="${item.src}" alt="${item.caption || 'Coaching photo'}" loading="lazy">
-          <div class="galaxy-overlay">
-            <div class="galaxy-overlay-title">${item.caption || ''}</div>
-            <span class="galaxy-overlay-tag">Photo</span>
-          </div>
-        </div>`;
-      }
+    // Group items by date
+    const groups = [];
+    const seen = {};
+    items.forEach(item => {
+      const d = item.date || '';
+      if (!seen[d]) { seen[d] = true; groups.push({ date: d, items: [] }); }
+      groups[groups.length - 1].items.push(item);
+    });
+
+    grid.innerHTML = groups.map(group => {
+      const header = group.date
+        ? `<div style="grid-column:1/-1;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--cyan);padding:8px 0 4px;border-bottom:1px solid rgba(0,180,216,0.2);margin-bottom:4px;">${group.date}</div>`
+        : '';
+      const cards = group.items.map((item) => {
+        const globalIndex = GALLERY_ITEMS.indexOf(item);
+        const dateLabel = item.date
+          ? `<div style="font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(248,250,255,0.4);padding:8px 14px 0;">${item.date}</div>`
+          : '';
+        if (item.type === 'video' || item.type === 'rawvideo') {
+          const content = item.type === 'rawvideo'
+            ? `<video style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" src="${item.src}" ${item.poster ? `poster="${item.poster}"` : ''} playsinline muted loop></video>`
+            : (() => {
+                const src = item.youtubeId
+                  ? `https://www.youtube.com/embed/${item.youtubeId}?rel=0`
+                  : `https://drive.google.com/file/d/${item.driveId}/preview`;
+                return `<iframe src="${src}" allowfullscreen allow="autoplay" style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>`;
+              })();
+          return `<div class="galaxy-item video-item" data-type="video" style="cursor:pointer;" onclick="openVideoLightbox(${globalIndex})">
+            <div class="galaxy-video-wrap" style="pointer-events:none;">${content}</div>
+            <span class="galaxy-play-badge">▶ Video</span>
+            ${dateLabel}
+          </div>`;
+        } else {
+          const photoItems = GALLERY_ITEMS.filter(x => x.type === 'photo');
+          const photoIndex = photoItems.indexOf(item);
+          return `<div class="galaxy-item" data-type="photo" onclick="openLightbox(${photoIndex})">
+            <img src="${item.src}" alt="Coaching photo" loading="lazy">
+            ${dateLabel}
+          </div>`;
+        }
+      }).join('');
+      return header + cards;
     }).join('');
   }
 
@@ -1108,6 +1122,8 @@
   // Always start at the top
   history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
+  window.addEventListener('load', () => window.scrollTo(0, 0));
+  window.addEventListener('pageshow', () => window.scrollTo(0, 0));
 
   // ── Scroll reveal ──
   const observer = new IntersectionObserver(entries => {
